@@ -32,7 +32,7 @@ open class ATChatMessageView: UIView {
     //    var button: UIButton!
     
     /// 消息数组
-    var messages = [ATMessageItem]()
+    public var messages = [ATMessageItem]()
     
     var messageSender: String = ""
     
@@ -65,7 +65,17 @@ open class ATChatMessageView: UIView {
     var allowsSendMultiMedia: Bool = true
     
     /// 是否加载更多数据
-    var loadingMoreData: Bool = false
+    var loadingMoreData: Bool = false {
+        didSet {
+//            if loadingMoreData {
+//                self.progressViewLoadMore.isHidden = false
+//                self.progressViewLoadMore.startAnimating()
+//            } else {
+//                self.progressViewLoadMore.stopAnimating()
+//                self.progressViewLoadMore.isHidden = true
+//            }
+        }
+    }
     
     var canLoadmore: Bool = false
     //    {
@@ -136,11 +146,14 @@ public extension ATChatMessageView {
         
         
         //        self.delegate = self
-        
-        self.tableView = ATChatTableView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        //设置建议的行高度
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = CGSize(width: self.bounds.width, height: ATChatMessageViewCell.cellHeight)
+        self.tableView = ATChatTableView(frame: .zero, collectionViewLayout: layout)
         self.adapter.collectionView = self.tableView
         self.adapter.dataSource = self
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.backgroundColor = UIColor.white
         self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
         self.addSubview(self.tableView)
         
@@ -151,9 +164,9 @@ public extension ATChatMessageView {
         //        self.tableView.tableHeaderView = headerView
         
         //加入loadingView
-        self.progressViewLoadMore = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        self.progressViewLoadMore.translatesAutoresizingMaskIntoConstraints = false
-        self.headerView.addSubview(self.progressViewLoadMore)
+//        self.progressViewLoadMore = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+//        self.progressViewLoadMore.translatesAutoresizingMaskIntoConstraints = false
+//        self.headerView.addSubview(self.progressViewLoadMore)
         
         
         self.messageInputView = ATMessageInputView(frame: CGRect.zero)
@@ -184,8 +197,8 @@ public extension ATChatMessageView {
         let views: [String: Any] = [
             "tableView": self.tableView,
             "messageInputView": self.messageInputView,
-            "headerView": self.headerView,
-            "progressViewLoadMore": self.progressViewLoadMore,
+//            "headerView": self.headerView,
+//            "progressViewLoadMore": self.progressViewLoadMore,
             "shareMenuView": self.shareMenuView
         ]
         
@@ -372,6 +385,7 @@ public extension ATChatMessageView {
         }
         
     }
+    
 }
 
 
@@ -405,7 +419,7 @@ public extension ATChatMessageView {
     
     
     /// 滚动表格到底部
-    @objc func tableViewScrollToBottom() {
+    @objc public func tableViewScrollToBottom() {
         self.tableViewScrollToBottomAnimated(false)
     }
     
@@ -413,7 +427,7 @@ public extension ATChatMessageView {
     /// 把表格滚回到底部
     ///
     /// - Parameter animated: 是否显示动画
-    func tableViewScrollToBottomAnimated(_ animated: Bool) {
+    public func tableViewScrollToBottomAnimated(_ animated: Bool) {
         if !isTableScrollToBottom {
             if self.messages.count == 0 {
                 return
@@ -423,6 +437,52 @@ public extension ATChatMessageView {
             self.adapter.scroll(to: self.messages.last!, supplementaryKinds: nil, scrollDirection: .vertical, scrollPosition: .bottom, animated: animated)
 
         }
+    }
+    
+    /**
+     增加聊天消息到表格
+     
+     - parameter chatMessages:     消息数组
+     - parameter toPosition:            添加在哪个位置
+     - parameter isScrollToBottom: 是否滚动到底部
+     */
+    public func add(
+        chatMessages: [ATMessageItem],
+        toTopPosition: Bool = true,
+        isScrollToBottom: Bool = true,
+        delayLoad: Double = 0) {
+        if toTopPosition {
+            self.messages = chatMessages + self.messages
+            
+            
+            self.loadingMoreData = false
+            
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delayLoad * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
+//
+//                if isScrollToBottom {
+//                    self.tableViewScrollToBottomAnimated(true)
+//                }
+//
+//
+//            }
+            
+        } else {
+            self.messages = self.messages + chatMessages
+            
+//            self.adapter.performUpdates(animated: true, completion: nil)
+//
+//            if isScrollToBottom {
+//                self.tableViewScrollToBottomAnimated(true)
+//            }
+        }
+        
+        self.adapter.performUpdates(animated: false) {
+            (flag) in
+            if isScrollToBottom {
+                self.tableViewScrollToBottomAnimated(false)
+            }
+        }
+        
     }
 }
 

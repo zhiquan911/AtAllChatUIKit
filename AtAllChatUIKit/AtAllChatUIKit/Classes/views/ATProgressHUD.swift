@@ -44,7 +44,7 @@ public class ATProgressHUD: UIView {
         
         if (self.imageViewmicroPhone == nil) {
             let imageViewmicroPhone = UIImageView()
-            imageViewmicroPhone.image = UIImage(named: "RecordingBkg")
+            imageViewmicroPhone.image = UIImage.loadImage(named: "RecordingBkg")
             imageViewmicroPhone.translatesAutoresizingMaskIntoConstraints = false
             imageViewmicroPhone.contentMode = UIViewContentMode.scaleToFill
             self.addSubview(imageViewmicroPhone)
@@ -53,7 +53,7 @@ public class ATProgressHUD: UIView {
         
         if (self.imageViewPowerOfVoice == nil) {
             let imageViewPowerOfVoice = UIImageView()
-            imageViewPowerOfVoice.image = UIImage(named: "RecordingSignal001")
+            imageViewPowerOfVoice.image = UIImage.loadImage(named: "RecordingSignal001")
             imageViewPowerOfVoice.translatesAutoresizingMaskIntoConstraints = false
             imageViewPowerOfVoice.contentMode = UIViewContentMode.scaleToFill
             self.addSubview(imageViewPowerOfVoice)
@@ -62,7 +62,7 @@ public class ATProgressHUD: UIView {
         
         if (self.imageViewCancel == nil) {
             let imageViewCancel = UIImageView()
-            imageViewCancel.image = UIImage(named: "RecordCancel")
+            imageViewCancel.image = UIImage.loadImage(named: "RecordCancel")
             imageViewCancel.isHidden = true
             imageViewCancel.translatesAutoresizingMaskIntoConstraints = false
             imageViewCancel.contentMode = UIViewContentMode.scaleToFill
@@ -72,7 +72,7 @@ public class ATProgressHUD: UIView {
         
         if (self.imageViewMessageTooShort == nil) {
             let imageViewMessageTooShort = UIImageView()
-            imageViewMessageTooShort.image = UIImage(named: "MessageTooShort")
+            imageViewMessageTooShort.image = UIImage.loadImage(named: "MessageTooShort")
             imageViewMessageTooShort.isHidden = true
             imageViewMessageTooShort.translatesAutoresizingMaskIntoConstraints = false
             imageViewMessageTooShort.contentMode = UIViewContentMode.scaleToFill
@@ -294,7 +294,7 @@ public class ATProgressHUD: UIView {
         } else if (peakPower > 0.9 && peakPower <= 1.0) {
             imageName = imageName + "8"
         }
-        self.imageViewPowerOfVoice.image = UIImage(named: imageName);
+        self.imageViewPowerOfVoice.image = UIImage.loadImage(named: imageName);
     }
     
 }

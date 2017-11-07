@@ -1,3 +1,6 @@
 
 # IGListKit
 github "Instagram/IGListKit" ~> 3.0
+
+# 图片网络加载
+github "rs/SDWebImage"

@@ -10,6 +10,8 @@
 		C54B32FA1FAEFC2100340CE1 /* IGListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54B32F91FAEFC2100340CE1 /* IGListKit.framework */; };
 		C54CCC211FB1941B0095E253 /* AtAllChatUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54CCC201FB1941B0095E253 /* AtAllChatUIKit.framework */; };
 		C54CCC221FB1941B0095E253 /* AtAllChatUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C54CCC201FB1941B0095E253 /* AtAllChatUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C54CCC271FB1957F0095E253 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC261FB1957F0095E253 /* ChatViewController.swift */; };
+		C54CCC3D1FB1AA6B0095E253 /* messages.json in Resources */ = {isa = PBXBuildFile; fileRef = C54CCC3C1FB1AA6B0095E253 /* messages.json */; };
 		C5B77EA11FAEB94400156874 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B77EA01FAEB94400156874 /* AppDelegate.swift */; };
 		C5B77EA31FAEB94400156874 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B77EA21FAEB94400156874 /* ViewController.swift */; };
 		C5B77EA61FAEB94400156874 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5B77EA41FAEB94400156874 /* Main.storyboard */; };
@@ -41,11 +43,24 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C54CCC361FB199B70095E253 /* Embed PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C54B32F91FAEFC2100340CE1 /* IGListKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IGListKit.framework; path = Carthage/Build/iOS/IGListKit.framework; sourceTree = "<group>"; };
 		C54CCC201FB1941B0095E253 /* AtAllChatUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AtAllChatUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C54CCC241FB194F70095E253 /* AtAllChatUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AtAllChatUIKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatUIKit-fzftfzaiafidcweruohdjymsouto/Build/Products/Debug-iphoneos/AtAllChatUIKit.framework"; sourceTree = "<group>"; };
+		C54CCC261FB1957F0095E253 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		C54CCC3C1FB1AA6B0095E253 /* messages.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = messages.json; sourceTree = "<group>"; };
 		C5B77E9D1FAEB94400156874 /* AtAllChatDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtAllChatDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5B77EA01FAEB94400156874 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5B77EA21FAEB94400156874 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,9 +98,26 @@
 		C54B32F81FAEFC2100340CE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C54CCC241FB194F70095E253 /* AtAllChatUIKit.framework */,
 				C54B32F91FAEFC2100340CE1 /* IGListKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C54CCC251FB1956B0095E253 /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				C54CCC261FB1957F0095E253 /* ChatViewController.swift */,
+			);
+			path = viewcontrollers;
+			sourceTree = "<group>";
+		};
+		C54CCC3B1FB1AA2F0095E253 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				C54CCC3C1FB1AA6B0095E253 /* messages.json */,
+			);
+			path = resources;
 			sourceTree = "<group>";
 		};
 		C5B77E941FAEB94400156874 = {
@@ -111,6 +143,8 @@
 		C5B77E9F1FAEB94400156874 /* AtAllChatDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C54CCC3B1FB1AA2F0095E253 /* resources */,
+				C54CCC251FB1956B0095E253 /* viewcontrollers */,
 				C5CC541D1FB0816100F2AC44 /* customviews */,
 				C5B77EA01FAEB94400156874 /* AppDelegate.swift */,
 				C5B77EA21FAEB94400156874 /* ViewController.swift */,
@@ -152,6 +186,7 @@
 				C5B77E9B1FAEB94400156874 /* Resources */,
 				C54B32FB1FAEFC3A00340CE1 /* ShellScript */,
 				C54CCC231FB1941B0095E253 /* Embed Frameworks */,
+				C54CCC361FB199B70095E253 /* Embed PlugIns */,
 			);
 			buildRules = (
 			);
@@ -226,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5B77EAB1FAEB94400156874 /* LaunchScreen.storyboard in Resources */,
+				C54CCC3D1FB1AA6B0095E253 /* messages.json in Resources */,
 				C5B77EA81FAEB94400156874 /* Assets.xcassets in Resources */,
 				C5B77EA61FAEB94400156874 /* Main.storyboard in Resources */,
 			);
@@ -265,6 +301,7 @@
 			files = (
 				C5B77EA31FAEB94400156874 /* ViewController.swift in Sources */,
 				C5CC541F1FB0818400F2AC44 /* DemoView.swift in Sources */,
+				C54CCC271FB1957F0095E253 /* ChatViewController.swift in Sources */,
 				C5B77EA11FAEB94400156874 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

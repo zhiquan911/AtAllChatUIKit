@@ -23,8 +23,8 @@ open class ATShareMenuItemView: UIView {
             button.setImage(menuItemImage, for: .normal)
             button.backgroundColor = UIColor.clear
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.setBackgroundImage(UIImage(named: "VoiceBtn_black"), for: .normal)
-            button.setBackgroundImage(UIImage(named: "VoiceBtn_blackHL"), for: .highlighted)
+            button.setBackgroundImage(UIImage.loadImage(named: "VoiceBtn_black"), for: .normal)
+            button.setBackgroundImage(UIImage.loadImage(named: "VoiceBtn_blackHL"), for: .highlighted)
             self.addSubview(button)
             
             self.buttonMenuItem = button

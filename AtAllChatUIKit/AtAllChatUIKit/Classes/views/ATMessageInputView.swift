@@ -181,11 +181,14 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
         
         // 允许发送语音
         if (self.allowsSendVoice) {
-            
-            button = self.createButtonWithImage(image: UIImage(named: "voice"), hlImage: UIImage(named: "voice_HL"))
+//            UIImage.loadImage(named: "voice")
+//            UIImage.loadImage(named: "voice_HL")
+            button = self.createButtonWithImage(
+                image: UIImage.loadImage(named: "voice"),
+                hlImage: UIImage.loadImage(named: "voice_HL"))
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(toggleMessageOrVoiceButton), for: UIControlEvents.touchUpInside)
-            button.setBackgroundImage(UIImage(named: "keyboard"), for: UIControlState.selected)
+            button.setBackgroundImage(UIImage.loadImage(named: "keyboard"), for: UIControlState.selected)
             self.voiceChangeButton = button
             self.addSubview(button)
             
@@ -210,7 +213,7 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
         
         // 允许发送多媒体消息，为什么不是先放表情按钮呢？因为布局的需要！
         if (self.allowsSendMultiMedia) {
-            button = self.createButtonWithImage(image: UIImage(named: "multiMedia"), hlImage: UIImage(named: "multiMedia_HL"))
+            button = self.createButtonWithImage(image: UIImage.loadImage(named: "multiMedia"), hlImage: UIImage.loadImage(named: "multiMedia_HL"))
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: #selector(handleMediaButtonPress), for: UIControlEvents.touchUpInside)
             button.tag = 2
@@ -266,7 +269,7 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
         
         //背景颜色
         self.backgroundColor = UIColor.white;
-        self.image = UIImage(named: "input-bar-flat")?.resizableImage(withCapInsets: UIEdgeInsetsMake(2.0, 0.0, 0.0, 0.0),
+        self.image = UIImage.loadImage(named: "input-bar-flat")?.resizableImage(withCapInsets: UIEdgeInsetsMake(2.0, 0.0, 0.0, 0.0),
                                                                       resizingMode: UIImageResizingMode.tile)
         
         
@@ -275,7 +278,7 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
             
             let edgeInsets = UIEdgeInsetsMake(9, 9, 9, 9);
             button = self.createButtonWithImage(
-                image: UIImage(named: "VoiceBtn_black")?.resizableImage(withCapInsets: edgeInsets, resizingMode: UIImageResizingMode.stretch), hlImage: UIImage(named: "VoiceBtn_blackHL")?.resizableImage(withCapInsets: edgeInsets, resizingMode: UIImageResizingMode.stretch))
+                image: UIImage.loadImage(named: "VoiceBtn_black")?.resizableImage(withCapInsets: edgeInsets, resizingMode: UIImageResizingMode.stretch), hlImage: UIImage.loadImage(named: "VoiceBtn_blackHL")?.resizableImage(withCapInsets: edgeInsets, resizingMode: UIImageResizingMode.stretch))
             button.setTitleColor(
                 UIColor.darkGray,
                 for: .normal)

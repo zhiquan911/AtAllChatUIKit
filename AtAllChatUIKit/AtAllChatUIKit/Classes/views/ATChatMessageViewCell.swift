@@ -12,7 +12,7 @@ import UIKit
 /// 消息列表单元格视图
 public class ATChatMessageViewCell: UICollectionViewCell {
     
-    static let kDefaultImage = UIImage(named: "PhotoDownload")!
+    static let kDefaultImage = UIImage.loadImage(named: "PhotoDownload")!
     
     @IBOutlet public var labelTimeStamp: UILabel!
     @IBOutlet public var viewTimeStamp: UIView!
@@ -86,4 +86,15 @@ public class ATChatMessageViewCell: UICollectionViewCell {
         self.progressViewRight.hidesWhenStopped = true
     }
     
+    
+    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        setNeedsLayout()
+        layoutIfNeeded()
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var newFrame = layoutAttributes.frame
+        // note: don't change the width
+        newFrame.size.height = ceil(size.height)
+        layoutAttributes.frame = newFrame
+        return layoutAttributes
+    }
 }

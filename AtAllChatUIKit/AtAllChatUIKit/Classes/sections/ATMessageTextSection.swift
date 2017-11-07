@@ -14,6 +14,9 @@ open class ATMessageTextSection: ListSectionController {
 
     private var message: ATMessageItem!
     
+    override init() {
+        super.init()
+    }
     
     /// 单元格的尺寸配置
     ///
@@ -30,7 +33,7 @@ open class ATMessageTextSection: ListSectionController {
     /// - Returns:
     override open func cellForItem(at index: Int) -> UICollectionViewCell {
         
-        guard let cell = collectionContext?.dequeueReusableCell(withNibName: "ATChatMessageViewTextCell", bundle: nil, for: self, at: index) as? ATChatMessageViewCell else {
+        guard let cell = collectionContext?.dequeueReusableCell(withNibName: "ATChatMessageViewTextCell", bundle: Bundle(for: self.classForCoder), for: self, at: index) as? ATChatMessageViewCell else {
                                                                                 fatalError()
         }
         
@@ -82,7 +85,7 @@ open class ATMessageTextSection: ListSectionController {
             buttonUserAvatar.setImage(message.avatar!, for: .normal)
         }
 //        else {
-//            cell.buttonUserAvatar.imageView?.af_setImageWithURL(NSURL(string: message.avatarUrl)!, placeholderImage: UIImage(named: "avator"))
+//            cell.buttonUserAvatar.imageView?.af_setImageWithURL(NSURL(string: message.avatarUrl)!, placeholderImage: UIImage.loadImage(named: "avator"))
 //        }
         
         return cell
