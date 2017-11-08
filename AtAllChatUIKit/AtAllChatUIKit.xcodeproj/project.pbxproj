@@ -24,6 +24,8 @@
 		C54CCC4F1FB1B1150095E253 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC451FB1B1140095E253 /* String+extension.swift */; };
 		C54CCC501FB1B1150095E253 /* UIDevice+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC461FB1B1140095E253 /* UIDevice+extension.swift */; };
 		C54CCC511FB1B1150095E253 /* UILabel+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC471FB1B1140095E253 /* UILabel+extension.swift */; };
+		C57AF12E1FB2D47E00751CB3 /* ATChatMessageViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57AF12D1FB2D47E00751CB3 /* ATChatMessageViewDelegate.swift */; };
+		C57AF1301FB302E000751CB3 /* ATMessageSectionProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57AF12F1FB302E000751CB3 /* ATMessageSectionProtocal.swift */; };
 		C58ED78A1FAC320800982F18 /* AtAllChatUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C58ED7801FAC320800982F18 /* AtAllChatUIKit.framework */; };
 		C58ED78F1FAC320800982F18 /* AtAllChatUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58ED78E1FAC320800982F18 /* AtAllChatUIKitTests.swift */; };
 		C58ED7911FAC320800982F18 /* AtAllChatUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C58ED7831FAC320800982F18 /* AtAllChatUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -55,7 +57,6 @@
 		C54B33051FAF0A9200340CE1 /* SCImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SCImages.xcassets; sourceTree = "<group>"; };
 		C54B330F1FAF0A9200340CE1 /* ATMessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATMessageItem.swift; sourceTree = "<group>"; };
 		C54CCC1E1FB17ECA0095E253 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
-		C54CCC2E1FB199310095E253 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C54CCC371FB19FAE0095E253 /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
 		C54CCC391FB1A6090095E253 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		C54CCC3E1FB1B1130095E253 /* UIView+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
@@ -92,6 +93,8 @@
 		C54CCC6E1FB1B5060095E253 /* SCMessageSenderTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCMessageSenderTextCell.xib; sourceTree = "<group>"; };
 		C54CCC6F1FB1B5060095E253 /* SCMessageSenderVideoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCMessageSenderVideoCell.xib; sourceTree = "<group>"; };
 		C54CCC701FB1B5060095E253 /* SCMessageSenderVoiceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCMessageSenderVoiceCell.xib; sourceTree = "<group>"; };
+		C57AF12D1FB2D47E00751CB3 /* ATChatMessageViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATChatMessageViewDelegate.swift; sourceTree = "<group>"; };
+		C57AF12F1FB302E000751CB3 /* ATMessageSectionProtocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATMessageSectionProtocal.swift; sourceTree = "<group>"; };
 		C58ED7801FAC320800982F18 /* AtAllChatUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AtAllChatUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58ED7831FAC320800982F18 /* AtAllChatUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AtAllChatUIKit.h; sourceTree = "<group>"; };
 		C58ED7841FAC320800982F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -173,14 +176,6 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
-		C54CCC2D1FB199310095E253 /* AtAllChatUI */ = {
-			isa = PBXGroup;
-			children = (
-				C54CCC2E1FB199310095E253 /* Info.plist */,
-			);
-			path = AtAllChatUI;
-			sourceTree = "<group>";
-		};
 		C54CCC521FB1B5060095E253 /* old */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,13 +255,21 @@
 			path = xib;
 			sourceTree = "<group>";
 		};
+		C57AF12C1FB2D45800751CB3 /* protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C57AF12D1FB2D47E00751CB3 /* ATChatMessageViewDelegate.swift */,
+				C57AF12F1FB302E000751CB3 /* ATMessageSectionProtocal.swift */,
+			);
+			path = protocols;
+			sourceTree = "<group>";
+		};
 		C58ED7761FAC320800982F18 = {
 			isa = PBXGroup;
 			children = (
 				C54CCC391FB1A6090095E253 /* Cartfile */,
 				C58ED7821FAC320800982F18 /* AtAllChatUIKit */,
 				C58ED78D1FAC320800982F18 /* AtAllChatUIKitTests */,
-				C54CCC2D1FB199310095E253 /* AtAllChatUI */,
 				C58ED7811FAC320800982F18 /* Products */,
 				C54B32FC1FAF007700340CE1 /* Frameworks */,
 			);
@@ -305,6 +308,7 @@
 		C58ED8161FAC97FF00982F18 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C57AF12C1FB2D45800751CB3 /* protocols */,
 				C54CCC1D1FB16AF50095E253 /* extensions */,
 				C5CC541A1FB0568000F2AC44 /* xibs */,
 				C5CC54171FB038E400F2AC44 /* models */,
@@ -496,6 +500,7 @@
 				C58ED84E1FAC980E00982F18 /* ATProgressHUD.swift in Sources */,
 				C54CCC1F1FB17ECA0095E253 /* Date+extension.swift in Sources */,
 				C58ED84F1FAC980E00982F18 /* ATShareMenuItemView.swift in Sources */,
+				C57AF1301FB302E000751CB3 /* ATMessageSectionProtocal.swift in Sources */,
 				C54CCC4A1FB1B1150095E253 /* UIColor+extension.swift in Sources */,
 				C54CCC381FB19FAE0095E253 /* UIImage+extension.swift in Sources */,
 				C54CCC4D1FB1B1150095E253 /* Int+extension.swift in Sources */,
@@ -503,6 +508,7 @@
 				C5CC54191FB0459800F2AC44 /* ATChatMessageViewCell.swift in Sources */,
 				C58ED8501FAC980E00982F18 /* ATShareMenuView.swift in Sources */,
 				C54CCC511FB1B1150095E253 /* UILabel+extension.swift in Sources */,
+				C57AF12E1FB2D47E00751CB3 /* ATChatMessageViewDelegate.swift in Sources */,
 				C58ED85E1FAC9B7600982F18 /* ATChatTableView.swift in Sources */,
 				C54CCC481FB1B1150095E253 /* UIView+extension.swift in Sources */,
 				C58ED85C1FAC985F00982F18 /* ATChatMessageView.swift in Sources */,

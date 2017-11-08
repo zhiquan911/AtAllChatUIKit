@@ -88,7 +88,7 @@ extension String {
             let attributes = [NSAttributedStringKey.font: font]
             textSize = newStr.size(withAttributes: attributes)
         } else {
-            let option = NSStringDrawingOptions.usesLineFragmentOrigin
+            let option: NSStringDrawingOptions = [.usesFontLeading, .usesLineFragmentOrigin]
             let attributes = [NSAttributedStringKey.font: font]
             let stringRect = newStr.boundingRect(with: size, options: option, attributes: attributes, context: nil)
             textSize = stringRect.size

@@ -14,6 +14,17 @@ public class ATChatMessageViewCell: UICollectionViewCell {
     
     static let kDefaultImage = UIImage.loadImage(named: "PhotoDownload")!
     
+    /// 单元格高度
+    static let cellHeight: CGFloat = 100
+    
+    /// 内容文字大小
+    static let font: UIFont = UIFont.systemFont(ofSize: 14)
+    
+    //语音消息的背景长度根据语音时长正比变化，最大宽为200，最小宽为66，最大录音时长60秒
+    let maxBubbleVoiceWdith: CGFloat = 200
+    let minBubbleVoiceWdith: CGFloat = 66
+    let maxVoiceDuration: Float = 60.0
+
     @IBOutlet public var labelTimeStamp: UILabel!
     @IBOutlet public var viewTimeStamp: UIView!
     
@@ -55,13 +66,7 @@ public class ATChatMessageViewCell: UICollectionViewCell {
     @IBOutlet var bubbleViewWidthContraints: NSLayoutConstraint!
     
     
-    //语音消息的背景长度根据语音时长正比变化，最大宽为200，最小宽为66，最大录音时长60秒
-    let maxBubbleVoiceWdith: CGFloat = 200
-    let minBubbleVoiceWdith: CGFloat = 66
-    let maxVoiceDuration: Float = 60.0
-    
-    /// 单元格高度
-    static let cellHeight: CGFloat = 100
+
     
     public override init(frame: CGRect) {
         super.init(frame: frame)

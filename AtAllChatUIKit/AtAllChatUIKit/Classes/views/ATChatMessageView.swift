@@ -24,31 +24,44 @@ open class ATChatMessageView: UIView {
     public var shareMenuView: ATShareMenuView!
     
     /// 组件所在控制器
-    public var viewController: UIViewController?
-    
-    /// 多功能菜单是否显示
-    var isShareMenuViewShow = false
-    
-    //    var button: UIButton!
+    @IBOutlet public var viewController: UIViewController?
     
     /// 消息数组
     public var messages = [ATMessageItem]()
     
-    var messageSender: String = ""
+    /// 消息发送者，当天控制聊天的用户唯一键值
+    public var userkey: String = ""
     
-    /// 发送消息输入框的底部约束，用于控制弹出键盘的相对位置动画变化
-    var messageInputBottomConstraints: NSLayoutConstraint!
-    
-    
-    /// 是否加载更多消息
-    var _shouldLoadMoreMessagesScrollToTop: Bool? = true
+    /// 当用户滚动视图时是否不滚动到底部
+    public var shouldPreventScrollToBottomWhileUserScrolling: Bool = false
     
     /// 加载更多消息loading
     public var progressViewLoadMore: UIActivityIndicatorView!
     
     /// 表格头部
     public var headerView: UIView!
-    var isDragging: Bool! = false
+    
+    /// 是否允许可以发送语音
+    public var allowsSendVoice: Bool = true
+    
+    /// 是否允许发送多媒体
+    public var allowsSendMultiMedia: Bool = true
+    
+    /// 组件代理
+    @IBOutlet weak public var delegate: ATChatMessageViewDelegate?
+    
+    /// 多功能菜单是否显示
+    var isShareMenuViewShow = false
+    
+    /// 发送消息输入框的底部约束，用于控制弹出键盘的相对位置动画变化
+    var messageInputBottomConstraints: NSLayoutConstraint!
+    
+    /// 是否加载更多消息
+    var _shouldLoadMoreMessagesScrollToTop: Bool = true
+    
+    /// 是否滑动
+    var isDragging: Bool = false
+    
     var currentScrollViewContentOffset: CGPoint = CGPoint.zero
     //    var oldScrollViewContentSize: CGSize = CGSize.zero
     //    var currentSelecedCell: SCMessageTableViewCell?
@@ -57,12 +70,6 @@ open class ATChatMessageView: UIView {
     
     //多媒体工具条的底部约束，用于动态调整高度
     var shareMenuViewBottomConstraints: NSLayoutConstraint!
-    
-    /// 是否允许可以发送语音
-    var allowsSendVoice: Bool = true
-    
-    /// 是否允许发送多媒体
-    var allowsSendMultiMedia: Bool = true
     
     /// 是否加载更多数据
     var loadingMoreData: Bool = false {
@@ -109,7 +116,7 @@ open class ATChatMessageView: UIView {
     
     /// 列表适配器
     lazy var adapter: ListAdapter = {
-        return ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController)
+        return ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 2)
     }()
     
     public override init(frame: CGRect) {
@@ -148,8 +155,14 @@ public extension ATChatMessageView {
         //        self.delegate = self
         //设置建议的行高度
         let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = CGSize(width: self.bounds.width, height: ATChatMessageViewCell.cellHeight)
+//        layout.estimatedItemSize = CGSize(width: self.bounds.width, height: ATChatMessageViewCell.cellHeight)
         self.tableView = ATChatTableView(frame: .zero, collectionViewLayout: layout)
+        
+        //In iOS 10, a new cell prefetching API was introduced. At Instagram, enabling this feature substantially degraded scrolling performance. We recommend setting isPrefetchingEnabled to NO (false in Swift). Note that the default value is true.
+        if #available(iOS 10, *) {
+            self.tableView.isPrefetchingEnabled = false
+        }
+        
         self.adapter.collectionView = self.tableView
         self.adapter.dataSource = self
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -173,8 +186,8 @@ public extension ATChatMessageView {
         self.messageInputView.allowsSendVoice = self.allowsSendVoice
         self.messageInputView.allowsSendMultiMedia = self.allowsSendMultiMedia
         self.messageInputView.translatesAutoresizingMaskIntoConstraints = false
-        //        self.messageInputView.inputTextView.delegate = self
-        //        self.messageInputView.delegate = self
+        self.messageInputView.inputTextView.delegate = self
+        self.messageInputView.delegate = self
         self.addSubview(messageInputView)
         
         
@@ -261,6 +274,11 @@ public extension ATChatMessageView {
     
     /// 添加通知监听方法
     func addNotification() {
+        
+        // KVO 检查contentSize
+        self.messageInputView.inputTextView.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.new, context: nil)
+        
+        
         
         //键盘弹出时的监听，注意通过selector调用的方法不能为私有方法
         NotificationCenter.default.addObserver(
@@ -396,9 +414,6 @@ public extension ATChatMessageView {
     /// 视图再现
     public func viewDidAppear() {
         
-        // KVO 检查contentSize
-        self.messageInputView.inputTextView.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.new, context: nil)
-        
         self.messageInputView.inputTextView.isEditable = true
         
         //刷新多媒体菜单
@@ -420,7 +435,7 @@ public extension ATChatMessageView {
     
     /// 滚动表格到底部
     @objc public func tableViewScrollToBottom() {
-        self.tableViewScrollToBottomAnimated(false)
+        self.tableViewScrollToBottomAnimated(true)
     }
     
     
@@ -450,10 +465,9 @@ public extension ATChatMessageView {
         chatMessages: [ATMessageItem],
         toTopPosition: Bool = true,
         isScrollToBottom: Bool = true,
-        delayLoad: Double = 0) {
+        animated: Bool = false) {
         if toTopPosition {
             self.messages = chatMessages + self.messages
-            
             
             self.loadingMoreData = false
             
@@ -467,6 +481,7 @@ public extension ATChatMessageView {
 //            }
             
         } else {
+            
             self.messages = self.messages + chatMessages
             
 //            self.adapter.performUpdates(animated: true, completion: nil)
@@ -476,12 +491,86 @@ public extension ATChatMessageView {
 //            }
         }
         
-        self.adapter.performUpdates(animated: false) {
+//        self.adapter.performUpdates(animated: true)
+        self.adapter.performUpdates(animated: true) {
             (flag) in
             if isScrollToBottom {
-                self.tableViewScrollToBottomAnimated(false)
+                self.tableViewScrollToBottomAnimated(animated)
             }
         }
+        
+    }
+    
+    
+    /// 重新加载数据
+    ///
+    /// - Parameters:
+    ///   - messages: 消息数组
+    ///   - isScrollToBottom: 是否滚动到底部
+    ///   - animated: 是否动画
+    public func reloadData(messages: [ATMessageItem], isScrollToBottom: Bool = true, animated: Bool = false) {
+        self.messages.removeAll()
+        self.messages = messages
+        self.adapter.reloadData {
+            (flag) in
+            if isScrollToBottom {
+                self.tableViewScrollToBottomAnimated(animated)
+            }
+        }
+    }
+    
+    
+    /// 更新数据
+    ///
+    /// - Parameter animated:
+    public func performUpdates(animated: Bool = true) {
+        
+        self.adapter.performUpdates(animated: animated)
+    }
+    
+    
+    /// 重新加载消息项
+    ///
+    /// - Parameter messages:
+    public func reloadMessages(_ messages: [ATMessageItem]) {
+        for msg in messages {
+            self.reloadMessage(msg)
+        }
+    }
+    
+    
+    /// 刷新单个消息的UI
+    ///
+    /// - Parameter message:
+    public func reloadMessage(_ message: ATMessageItem) {
+        
+        guard let section = self.adapter.sectionController(for: message) else {
+            return
+        }
+        
+        guard let cell = section.collectionContext?.cellForItem(at: 0, sectionController: section) as? ATChatMessageViewCell else {
+            return
+        }
+        
+        //刷新UI
+        section.configureCellBySubclass(cell)
+    }
+    
+    /**
+     完成发送消息
+     */
+    public func finishSendMessage() {
+        
+        self.messageInputView.inputTextView.text = ""
+        self.messageInputView.inputTextView.enablesReturnKeyAutomatically = false
+        
+        //把发送按钮变灰
+        DispatchQueue.main.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(0.1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
+            self.messageInputView.inputTextView.enablesReturnKeyAutomatically = true
+            self.messageInputView.inputTextView.reloadInputViews()
+        }
+        
         
     }
 }
@@ -491,7 +580,7 @@ public extension ATChatMessageView {
 extension ATChatMessageView: ListAdapterDataSource {
     
     public func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return self.messages as! [ListDiffable]
+        return self.messages as [ListDiffable]
     }
     
     public func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -503,7 +592,27 @@ extension ATChatMessageView: ListAdapterDataSource {
     }
 }
 
-//MARK: textView代理事件
+
+// MARK: - 实现输入工具栏的委托方法
+extension ATChatMessageView: ATMessageInputViewDelegate {
+    
+    public func didMediaButtonPress(inputView: ATMessageInputView) {
+        
+    }
+    
+    public func didFinishRecoingVoiceAction(voiceData: Data, voicePath: String, voiceDuration: Float) {
+        
+    }
+    
+    public func didMessageOrVoiceButtonPress(inputView: ATMessageInputView, isShowVoice: Bool) {
+        if isShowVoice && self.isShareMenuViewShow {
+            self.messageInputBottomConstraints.constant = 0
+            self.isShareMenuViewShow = false
+        }
+    }
+}
+
+//MARK: textView委托方法
 extension ATChatMessageView: UITextViewDelegate{
     
     public func textViewDidEndEditing(_ textView: UITextView) {
@@ -513,10 +622,34 @@ extension ATChatMessageView: UITextViewDelegate{
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         if text == "\n" {
-            //提交
-//            self.sendMessage()
+            if !textView.text.isEmpty {
+                
+                let message = ATMessageItem()
+                let timestamp = Date().timeIntervalSince1970
+                message.messageId = self.userkey + timestamp.toString()
+                message.senderId = self.userkey
+                message.sended = false;
+                message.messageMediaType = .text
+                message.text = textView.text;
+                message.messageSourceType = .send;
+                message.timestamp = Int64(timestamp * 1000)
+                
+                //委托发送消息处理
+                self.delegate?.chatView?(view: self, didSendMessage: [message])
+                
+                //添加消息到表格最底
+                self.add(chatMessages: [message],
+                         toTopPosition: false,
+                         animated: true)
+                
+                //完成发送
+                self.finishSendMessage()
+                
+                return false
+            } else {
+                return false
+            }
             
-            return false
         }
         
         return true;

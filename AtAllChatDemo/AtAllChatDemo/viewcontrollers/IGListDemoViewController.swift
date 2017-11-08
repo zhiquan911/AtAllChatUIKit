@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class IGListDemoViewController: UIViewController {
     
     @IBOutlet var demoView: DemoView?
 

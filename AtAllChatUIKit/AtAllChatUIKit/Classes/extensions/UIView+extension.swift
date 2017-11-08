@@ -27,7 +27,7 @@ extension UIView {
     //不停360旋转
     func rotate360Degrees(_ duration: CFTimeInterval = 5, completionDelegate: AnyObject? = nil) {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotateAnimation.toValue = CGFloat(M_PI * 2.0)
+        rotateAnimation.toValue = CGFloat(Double.pi * 2.0)
         rotateAnimation.duration = duration
         rotateAnimation.isCumulative = true
         rotateAnimation.repeatCount = Float(CGFloat.greatestFiniteMagnitude)

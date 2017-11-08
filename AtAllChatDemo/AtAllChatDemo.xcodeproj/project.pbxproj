@@ -12,8 +12,9 @@
 		C54CCC221FB1941B0095E253 /* AtAllChatUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C54CCC201FB1941B0095E253 /* AtAllChatUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C54CCC271FB1957F0095E253 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC261FB1957F0095E253 /* ChatViewController.swift */; };
 		C54CCC3D1FB1AA6B0095E253 /* messages.json in Resources */ = {isa = PBXBuildFile; fileRef = C54CCC3C1FB1AA6B0095E253 /* messages.json */; };
+		C57AF12B1FB2AD4600751CB3 /* DemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57AF12A1FB2AD4600751CB3 /* DemoListViewController.swift */; };
 		C5B77EA11FAEB94400156874 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B77EA01FAEB94400156874 /* AppDelegate.swift */; };
-		C5B77EA31FAEB94400156874 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B77EA21FAEB94400156874 /* ViewController.swift */; };
+		C5B77EA31FAEB94400156874 /* IGListDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B77EA21FAEB94400156874 /* IGListDemoViewController.swift */; };
 		C5B77EA61FAEB94400156874 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5B77EA41FAEB94400156874 /* Main.storyboard */; };
 		C5B77EA81FAEB94400156874 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5B77EA71FAEB94400156874 /* Assets.xcassets */; };
 		C5B77EAB1FAEB94400156874 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5B77EA91FAEB94400156874 /* LaunchScreen.storyboard */; };
@@ -61,9 +62,10 @@
 		C54CCC241FB194F70095E253 /* AtAllChatUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AtAllChatUIKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatUIKit-fzftfzaiafidcweruohdjymsouto/Build/Products/Debug-iphoneos/AtAllChatUIKit.framework"; sourceTree = "<group>"; };
 		C54CCC261FB1957F0095E253 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		C54CCC3C1FB1AA6B0095E253 /* messages.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = messages.json; sourceTree = "<group>"; };
+		C57AF12A1FB2AD4600751CB3 /* DemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoListViewController.swift; sourceTree = "<group>"; };
 		C5B77E9D1FAEB94400156874 /* AtAllChatDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtAllChatDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5B77EA01FAEB94400156874 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C5B77EA21FAEB94400156874 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C5B77EA21FAEB94400156874 /* IGListDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGListDemoViewController.swift; sourceTree = "<group>"; };
 		C5B77EA51FAEB94400156874 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C5B77EA71FAEB94400156874 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5B77EAA1FAEB94400156874 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -108,6 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				C54CCC261FB1957F0095E253 /* ChatViewController.swift */,
+				C57AF12A1FB2AD4600751CB3 /* DemoListViewController.swift */,
+				C5B77EA21FAEB94400156874 /* IGListDemoViewController.swift */,
 			);
 			path = viewcontrollers;
 			sourceTree = "<group>";
@@ -147,7 +151,6 @@
 				C54CCC251FB1956B0095E253 /* viewcontrollers */,
 				C5CC541D1FB0816100F2AC44 /* customviews */,
 				C5B77EA01FAEB94400156874 /* AppDelegate.swift */,
-				C5B77EA21FAEB94400156874 /* ViewController.swift */,
 				C5B77EA41FAEB94400156874 /* Main.storyboard */,
 				C5B77EA71FAEB94400156874 /* Assets.xcassets */,
 				C5B77EA91FAEB94400156874 /* LaunchScreen.storyboard */,
@@ -299,7 +302,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5B77EA31FAEB94400156874 /* ViewController.swift in Sources */,
+				C5B77EA31FAEB94400156874 /* IGListDemoViewController.swift in Sources */,
+				C57AF12B1FB2AD4600751CB3 /* DemoListViewController.swift in Sources */,
 				C5CC541F1FB0818400F2AC44 /* DemoView.swift in Sources */,
 				C54CCC271FB1957F0095E253 /* ChatViewController.swift in Sources */,
 				C5B77EA11FAEB94400156874 /* AppDelegate.swift in Sources */,
@@ -392,7 +396,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -443,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

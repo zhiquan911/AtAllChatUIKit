@@ -12,11 +12,27 @@ import AtAllChatUIKit
 class ChatViewController: UIViewController {
     
     @IBOutlet var chatView: ATChatMessageView!
+    
+    var messages = [ATMessageItem]()
+    
+    var userkey = "123"   //指定一个用户ID为当前发送
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.chatView.userkey = self.userkey   //指定一个用户ID为当前发送
         self.loadMessageFromFile()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.chatView.viewDidAppear()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.chatView.viewDidDisappear()
+    }
+    
     
     func loadMessageFromFile() {
         
@@ -34,27 +50,35 @@ class ChatViewController: UIViewController {
             msg.timestamp = Int64(model["timestamp"]!) ?? 0
             msg.sended = true
             
+            if msg.senderId == self.userkey {
+                msg.messageSourceType = .send
+            } else {
+                msg.messageSourceType = .receive
+            }
+            
             messages.append(msg)
         }
         
-        self.chatView.add(chatMessages: messages, delayLoad: 1)
+        self.chatView.reloadData(messages: messages)
        
     }
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+extension ChatViewController: ATChatMessageViewDelegate {
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func chatView(view: ATChatMessageView, didSendMessage messages: [ATMessageItem]) {
+        
+        for msg in messages {
+            msg.sended = true
+            msg.senderName = "LI LEI"
+        }
+        
+        DispatchQueue.main.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
+            
+            self.chatView.reloadMessages(messages)
+        }
+        
+        
     }
-    */
-
 }
