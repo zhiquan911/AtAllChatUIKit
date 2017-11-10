@@ -14,6 +14,9 @@ open class ATChatMessageView: UIView {
     //常量
     let kShareMenuViewHeight: CGFloat = 216.0
     
+    //加载更多分区出的标记
+    let spinToken = "spinner"
+    
     /// 消息表格
     public var tableView: ATChatTableView!
     
@@ -38,9 +41,6 @@ open class ATChatMessageView: UIView {
     /// 加载更多消息loading
     public var progressViewLoadMore: UIActivityIndicatorView!
     
-    /// 表格头部
-    public var headerView: UIView!
-    
     /// 是否允许可以发送语音
     public var allowsSendVoice: Bool = true
     
@@ -49,6 +49,14 @@ open class ATChatMessageView: UIView {
     
     /// 组件代理
     @IBOutlet weak public var delegate: ATChatMessageViewDelegate?
+    
+    @IBOutlet weak public var shareMenuViewDelegate: ATShareMenuViewDelegate? {
+        didSet {
+            if self.shareMenuView != nil {
+                self.shareMenuView.delegate = self.shareMenuViewDelegate
+            }
+        }
+    }
     
     /// 多功能菜单是否显示
     var isShareMenuViewShow = false
@@ -72,35 +80,9 @@ open class ATChatMessageView: UIView {
     var shareMenuViewBottomConstraints: NSLayoutConstraint!
     
     /// 是否加载更多数据
-    var loadingMoreData: Bool = false {
-        didSet {
-//            if loadingMoreData {
-//                self.progressViewLoadMore.isHidden = false
-//                self.progressViewLoadMore.startAnimating()
-//            } else {
-//                self.progressViewLoadMore.stopAnimating()
-//                self.progressViewLoadMore.isHidden = true
-//            }
-        }
-    }
+    public var loadingMoreData: Bool = false
     
-    var canLoadmore: Bool = false
-    //    {
-    //        set {
-    //            if newValue {
-    //                self.tableView.tableHeaderView = self.headerView
-    //            } else {
-    //                self.tableView.tableHeaderView = nil
-    //            }
-    //        }
-    //        get {
-    //            if self.tableView.tableHeaderView == nil {
-    //                return false
-    //            } else {
-    //                return true
-    //            }
-    //        }
-    //    }
+    public var canLoadmore: Bool = true
     
     /// 是否滚动到表格底部
     var isTableScrollToBottom: Bool {
@@ -152,36 +134,26 @@ public extension ATChatMessageView {
             .delaysTouchesBegan = false
         
         
-        //        self.delegate = self
         //设置建议的行高度
         let layout = UICollectionViewFlowLayout()
-//        layout.estimatedItemSize = CGSize(width: self.bounds.width, height: ATChatMessageViewCell.cellHeight)
+
         self.tableView = ATChatTableView(frame: .zero, collectionViewLayout: layout)
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.backgroundColor = UIColor(hex: 0xeaebec)
+        self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
+        self.addSubview(self.tableView)
         
         //In iOS 10, a new cell prefetching API was introduced. At Instagram, enabling this feature substantially degraded scrolling performance. We recommend setting isPrefetchingEnabled to NO (false in Swift). Note that the default value is true.
         if #available(iOS 10, *) {
             self.tableView.isPrefetchingEnabled = false
         }
         
+        //配置列表适配器
         self.adapter.collectionView = self.tableView
         self.adapter.dataSource = self
-        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-        self.tableView.backgroundColor = UIColor.white
-        self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
-        self.addSubview(self.tableView)
-        
-        
-        //加入loading表头
-        //        self.headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: 44))
-        //        self.headerView.backgroundColor = self.tableView.backgroundColor
-        //        self.tableView.tableHeaderView = headerView
-        
-        //加入loadingView
-//        self.progressViewLoadMore = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-//        self.progressViewLoadMore.translatesAutoresizingMaskIntoConstraints = false
-//        self.headerView.addSubview(self.progressViewLoadMore)
-        
-        
+        self.adapter.scrollViewDelegate = self
+
+        //文本输入工具栏
         self.messageInputView = ATMessageInputView(frame: CGRect.zero)
         self.messageInputView.allowsSendVoice = self.allowsSendVoice
         self.messageInputView.allowsSendMultiMedia = self.allowsSendMultiMedia
@@ -193,8 +165,8 @@ public extension ATChatMessageView {
         
         //多媒体工具栏
         self.shareMenuView = ATShareMenuView()
+        self.shareMenuView.delegate = self.shareMenuViewDelegate
         self.shareMenuView.translatesAutoresizingMaskIntoConstraints = false
-        shareMenuView.backgroundColor = UIColor(white: 0.961, alpha: 1)
         self.addSubview(self.shareMenuView)
         
         //约束布局
@@ -210,8 +182,6 @@ public extension ATChatMessageView {
         let views: [String: Any] = [
             "tableView": self.tableView,
             "messageInputView": self.messageInputView,
-//            "headerView": self.headerView,
-//            "progressViewLoadMore": self.progressViewLoadMore,
             "shareMenuView": self.shareMenuView
         ]
         
@@ -245,17 +215,6 @@ public extension ATChatMessageView {
         
         self.addConstraint(self.messageInputBottomConstraints)
         
-        //        self.headerView.addConstraints(NSLayoutConstraint.constraints(
-        //            withVisualFormat: "V:|[progressViewLoadMore]|",
-        //            options: NSLayoutFormatOptions(),
-        //            metrics: nil,
-        //            views:views))
-        //
-        //        self.headerView.addConstraints(NSLayoutConstraint.constraints(
-        //            withVisualFormat: "H:|[progressViewLoadMore]|",
-        //            options: NSLayoutFormatOptions(),
-        //            metrics: nil,
-        //            views:views))
         
         self.addConstraints(NSLayoutConstraint.constraints(
             withVisualFormat: "H:|[shareMenuView]|",
@@ -443,6 +402,7 @@ public extension ATChatMessageView {
     ///
     /// - Parameter animated: 是否显示动画
     public func tableViewScrollToBottomAnimated(_ animated: Bool) {
+        self.tableView.loadMoreOnTop = false
         if !isTableScrollToBottom {
             if self.messages.count == 0 {
                 return
@@ -467,8 +427,8 @@ public extension ATChatMessageView {
         isScrollToBottom: Bool = true,
         animated: Bool = false) {
         if toTopPosition {
+            self.tableView.loadMoreOnTop = true     //设置这个可以使表格顶部加载更多数据后，位置不偏移
             self.messages = chatMessages + self.messages
-            
             self.loadingMoreData = false
             
 //            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delayLoad * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
@@ -492,7 +452,7 @@ public extension ATChatMessageView {
         }
         
 //        self.adapter.performUpdates(animated: true)
-        self.adapter.performUpdates(animated: true) {
+        self.adapter.performUpdates(animated: animated) {
             (flag) in
             if isScrollToBottom {
                 self.tableViewScrollToBottomAnimated(animated)
@@ -580,10 +540,23 @@ public extension ATChatMessageView {
 extension ATChatMessageView: ListAdapterDataSource {
     
     public func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return self.messages as [ListDiffable]
+        var objects = self.messages as [ListDiffable]
+        
+        // 下拉加载更多时，把加载更多的单元格样式添加到列表头
+        if self.loadingMoreData {
+            objects.insert(self.spinToken as ListDiffable, at: 0)
+        }
+        
+        return objects
     }
     
     public func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        
+        //如果行元素为加载更多标识，显示加载更多分区样式
+        if let obj = object as? String, obj == self.spinToken {
+            return SpinnerSectionController()
+        }
+        
         return ATMessageTextSection()
     }
     
@@ -597,7 +570,11 @@ extension ATChatMessageView: ListAdapterDataSource {
 extension ATChatMessageView: ATMessageInputViewDelegate {
     
     public func didMediaButtonPress(inputView: ATMessageInputView) {
-        
+        self.toggleMediaViewVisible()
+        if self.messageInputView.voiceChangeButton != nil
+            && self.messageInputView.voiceChangeButton.isSelected {
+            self.messageInputView.changeKeyboardMode()
+        }
     }
     
     public func didFinishRecoingVoiceAction(voiceData: Data, voicePath: String, voiceDuration: Float) {
@@ -655,6 +632,46 @@ extension ATChatMessageView: UITextViewDelegate{
         return true;
     }
     
+}
+
+extension ATChatMessageView: UIScrollViewDelegate {
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.isDragging = true
+    }
+    
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if self.loadingMoreData {
+            return
+        }
+        self.isDragging = true
+        if self.isShareMenuViewShow {
+            self.toggleMediaViewVisible(isVisible: false)
+        }
+    }
+    
+    public func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                   withVelocity velocity: CGPoint,
+                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        NSLog("pointee.y = \(targetContentOffset.pointee.y)")
+        
+        if self.loadingMoreData {
+            return
+        }
+        let shouldLoad = self.delegate?.shouldLoadMoreMessagesScrollToTop?(view: self) ?? true
+        if shouldLoad {
+            if targetContentOffset.pointee.y == 0  {
+                if !loadingMoreData && self.canLoadmore && self.isDragging == true {
+                    self.loadingMoreData = true
+                    self.adapter.performUpdates(animated: false, completion: nil)
+                    self.delegate?.loadMoreMessagesScrollTotop?(view: self)
+                }
+            }
+        }
+        self.isDragging = false
+
+    }
+
 }
 
 // MARK: - Key-value Observing

@@ -26,26 +26,27 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="28"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jbF-pD-hwC">
-                                        <rect key="frame" x="167" y="10" width="42" height="18"/>
+                                        <rect key="frame" x="167" y="8" width="42" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ar9-kI-HG7">
                                                 <rect key="frame" x="4" y="2" width="34" height="14"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.77024874266456156" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="Ar9-kI-HG7" firstAttribute="top" secondItem="jbF-pD-hwC" secondAttribute="top" constant="2" id="4YG-v4-n26"/>
                                             <constraint firstItem="Ar9-kI-HG7" firstAttribute="leading" secondItem="jbF-pD-hwC" secondAttribute="leading" constant="4" id="As3-b6-ffh"/>
-                                            <constraint firstAttribute="bottom" secondItem="Ar9-kI-HG7" secondAttribute="bottom" constant="2" id="ipq-4c-b2J"/>
-                                            <constraint firstAttribute="height" constant="18" id="ll6-rR-VyX"/>
+                                            <constraint firstAttribute="bottom" secondItem="Ar9-kI-HG7" secondAttribute="bottom" constant="4" id="ipq-4c-b2J"/>
+                                            <constraint firstAttribute="height" constant="20" id="ll6-rR-VyX"/>
                                             <constraint firstAttribute="trailing" secondItem="Ar9-kI-HG7" secondAttribute="trailing" constant="4" id="tC4-Be-ag3"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="53J-aA-buC"/>
                                     <constraint firstAttribute="bottom" secondItem="jbF-pD-hwC" secondAttribute="bottom" id="utA-FR-gJn"/>
@@ -152,7 +153,7 @@
                                                 </variation>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="QYd-km-Ai2" firstAttribute="leading" secondItem="B9K-g0-2ZW" secondAttribute="trailing" constant="15" id="3zW-48-xxO"/>
                                             <constraint firstItem="QYd-km-Ai2" firstAttribute="leading" secondItem="nxG-9p-TML" secondAttribute="leading" constant="8" id="5Nd-Cw-i0R"/>
@@ -264,6 +265,7 @@
                                                 <state key="normal" image="poi_Fail"/>
                                             </button>
                                         </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="noC-GI-g0D" firstAttribute="leading" secondItem="sUD-V4-ehX" secondAttribute="trailing" constant="8" id="0Xv-c0-rBB"/>
                                             <constraint firstItem="9f1-yU-zLV" firstAttribute="top" secondItem="KRa-dl-VYp" secondAttribute="top" constant="6" id="E6u-Dd-6rp"/>
@@ -287,7 +289,7 @@
                                         </variation>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="KRa-dl-VYp" firstAttribute="leading" secondItem="vCL-n6-FY7" secondAttribute="leading" id="AtG-dg-4Vj"/>
                                     <constraint firstAttribute="bottom" secondItem="nxG-9p-TML" secondAttribute="bottom" id="FJK-hS-V0B"/>

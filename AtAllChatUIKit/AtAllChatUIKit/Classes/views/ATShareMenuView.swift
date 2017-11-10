@@ -10,9 +10,9 @@ import UIKit
 
 @objc public protocol ATShareMenuViewDelegate {
     
-    func numberOfShareMenuItem() -> Int
+    @objc optional func numberOfShareMenuItem() -> Int
     
-    func menuItemViewForIndex(index: Int) -> ATShareMenuItemView
+    @objc optional func menuItemViewForIndex(index: Int) -> ATShareMenuItemView
     
     //点击多媒体菜单按钮
     @objc optional func didSelectShareMenuItem(itemView: ATShareMenuItemView, atIndex: Int)
@@ -23,7 +23,7 @@ open class ATShareMenuView: UIView {
     var shareMenuItems = [ATShareMenuItemView]()
     var scrollViewShareMenu: UIScrollView!
     var pageControlShareMenu: UIPageControl!
-    public var delegate: ATShareMenuViewDelegate?
+    weak var delegate: ATShareMenuViewDelegate?
     
     let kPageControlHeight: CGFloat = 30
     let kMenuItemViewWidth: CGFloat = 60
@@ -33,6 +33,8 @@ open class ATShareMenuView: UIView {
     
     private func setupUI() {
     
+        self.backgroundColor = UIColor(hex: 0xf7f7f7)
+        
         if scrollViewShareMenu == nil {
             let shareMenuScrollView = UIScrollView()
             shareMenuScrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -113,7 +115,7 @@ open class ATShareMenuView: UIView {
     刷新数据
     */
     func reloadData() {
-        let count = self.delegate?.numberOfShareMenuItem() ?? 0
+        let count = self.delegate?.numberOfShareMenuItem?() ?? 0
         for subview in self.scrollViewShareMenu.subviews {
             subview.removeFromSuperview()
         }
@@ -132,7 +134,7 @@ open class ATShareMenuView: UIView {
         
         for i in stride(from: 0, to: count, by: 1) {
 //        for var i = 0; i<count; i++ {
-            guard let itemView = self.delegate?.menuItemViewForIndex(index: i) else {
+            guard let itemView = self.delegate?.menuItemViewForIndex?(index: i) else {
                 continue
             }
             self.shareMenuItems.append(itemView)

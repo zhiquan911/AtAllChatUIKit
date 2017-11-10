@@ -90,7 +90,7 @@ open class ATShareMenuItemView: UIView {
         self.setupUI()
     }
     
-    convenience init(image: UIImage, title: String) {
+    public convenience init(image: UIImage, title: String) {
         self.init()
         self.menuItemImage = image
         self.menuItem = title

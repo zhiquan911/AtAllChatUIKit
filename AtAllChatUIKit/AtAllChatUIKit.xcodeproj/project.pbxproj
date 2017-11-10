@@ -36,6 +36,7 @@
 		C58ED85E1FAC9B7600982F18 /* ATChatTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58ED85D1FAC9B7600982F18 /* ATChatTableView.swift */; };
 		C58ED8601FAC9C2D00982F18 /* ATMessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58ED85F1FAC9C2D00982F18 /* ATMessageTextView.swift */; };
 		C58ED8621FAC9C4900982F18 /* ATMessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58ED8611FAC9C4900982F18 /* ATMessageInputView.swift */; };
+		C5B1DAA51FB44B1500CFD161 /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B1DAA41FB44B1500CFD161 /* SpinnerSectionController.swift */; };
 		C5CC54161FB00ABB00F2AC44 /* ATMessageTextSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC54151FB00ABB00F2AC44 /* ATMessageTextSection.swift */; };
 		C5CC54191FB0459800F2AC44 /* ATChatMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC54181FB0459800F2AC44 /* ATChatMessageViewCell.swift */; };
 		C5CC541C1FB056D100F2AC44 /* ATChatMessageViewTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5CC541B1FB056D100F2AC44 /* ATChatMessageViewTextCell.xib */; };
@@ -108,6 +109,7 @@
 		C58ED85D1FAC9B7600982F18 /* ATChatTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATChatTableView.swift; sourceTree = "<group>"; };
 		C58ED85F1FAC9C2D00982F18 /* ATMessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATMessageTextView.swift; sourceTree = "<group>"; };
 		C58ED8611FAC9C4900982F18 /* ATMessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATMessageInputView.swift; sourceTree = "<group>"; };
+		C5B1DAA41FB44B1500CFD161 /* SpinnerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerSectionController.swift; sourceTree = "<group>"; };
 		C5CC54151FB00ABB00F2AC44 /* ATMessageTextSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATMessageTextSection.swift; sourceTree = "<group>"; };
 		C5CC54181FB0459800F2AC44 /* ATChatMessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATChatMessageViewCell.swift; sourceTree = "<group>"; };
 		C5CC541B1FB056D100F2AC44 /* ATChatMessageViewTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATChatMessageViewTextCell.xib; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				C5CC54151FB00ABB00F2AC44 /* ATMessageTextSection.swift */,
+				C5B1DAA41FB44B1500CFD161 /* SpinnerSectionController.swift */,
 			);
 			path = sections;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 				C54CCC491FB1B1150095E253 /* NSTimer+extension.swift in Sources */,
 				C54CCC4C1FB1B1150095E253 /* Array+extension.swift in Sources */,
 				C54B33021FAF077900340CE1 /* VoiceRecord.swift in Sources */,
+				C5B1DAA51FB44B1500CFD161 /* SpinnerSectionController.swift in Sources */,
 				C54CCC4F1FB1B1150095E253 /* String+extension.swift in Sources */,
 				C5CC54161FB00ABB00F2AC44 /* ATMessageTextSection.swift in Sources */,
 				C58ED84E1FAC980E00982F18 /* ATProgressHUD.swift in Sources */,

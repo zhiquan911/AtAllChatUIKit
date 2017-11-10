@@ -410,14 +410,6 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
         self.delegate?.didMediaButtonPress?(inputView: self)
     }
     
-    //闭包函数测试
-    func printMessage(sender:() -> Void) {
-        sender()
-        print("printMessage")
-    }
-    
-    
-    
 }
 
 // MARK: - 录音相关方法
