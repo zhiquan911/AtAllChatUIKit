@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import AsyncDisplayKit
 
 class DemoView: UIView, ListAdapterDataSource {
 
@@ -15,7 +16,7 @@ class DemoView: UIView, ListAdapterDataSource {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: nil)
     }()
     
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let collectionView = ASCollectionNode(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     lazy var items = Array(0...20)
     var loading = false
@@ -37,9 +38,10 @@ class DemoView: UIView, ListAdapterDataSource {
     func setupUI() {
 //        self.backgroundColor = UIColor.white
 //        collectionView.backgroundColor = UIColor.white
-        adapter.collectionView = collectionView
-        adapter.dataSource = self
-        self.addSubview(collectionView)
+        self.adapter.setASDKCollectionNode(self.collectionView)
+//        adapter.collectionView = collectionView
+        self.adapter.dataSource = self
+        self.addSubnode(collectionView)
     }
     
     
@@ -66,21 +68,43 @@ class DemoView: UIView, ListAdapterDataSource {
     
 }
 
-final class LabelSectionController: ListSectionController {
+final class LabelSectionController: ListSectionController, ASSectionController {
     
     private var object: String?
     
-    override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width, height: 55)
+    public func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
+        let textAttributes : NSDictionary = [
+            NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline),
+            NSAttributedStringKey.foregroundColor: UIColor.gray
+        ]
+        let textInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 0)
+        let textCellNode = ASTextCellNode(attributes: textAttributes as! [AnyHashable : Any], insets: textInsets)
+        textCellNode.text = String(format: "Section %zd", index + 1)
+
+        return {
+            return textCellNode
+        }
     }
     
-    override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: LabelCell.self, for: self, at: index) as? LabelCell else {
-            fatalError()
-        }
-        cell.text = object
-        return cell
+    override open func sizeForItem(at index: Int) -> CGSize {
+        return ASIGListSectionControllerMethods.sizeForItem(at: index)
     }
+    
+    override open func cellForItem(at index: Int) -> UICollectionViewCell {
+        return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
+    }
+    
+//    override func sizeForItem(at index: Int) -> CGSize {
+//        return CGSize(width: collectionContext!.containerSize.width, height: 55)
+//    }
+//
+//    override func cellForItem(at index: Int) -> UICollectionViewCell {
+//        guard let cell = collectionContext?.dequeueReusableCell(of: LabelCell.self, for: self, at: index) as? LabelCell else {
+//            fatalError()
+//        }
+//        cell.text = object
+//        return cell
+//    }
 
     
     override func didUpdate(to object: Any) {
@@ -163,6 +187,34 @@ extension LabelCell: ListBindable {
     func bindViewModel(_ viewModel: Any) {
         guard let viewModel = viewModel as? String else { return }
         label.text = viewModel
+    }
+    
+}
+
+
+class ImageCellNode: ASCellNode {
+    let imageNode = ASImageNode()
+    required init(with image : UIImage) {
+        super.init()
+        imageNode.image = image
+        self.addSubnode(self.imageNode)
+    }
+    
+    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        var imageRatio: CGFloat = 0.5
+        if imageNode.image != nil {
+            imageRatio = (imageNode.image?.size.height)! / (imageNode.image?.size.width)!
+        }
+        
+        let imagePlace = ASRatioLayoutSpec(ratio: imageRatio, child: imageNode)
+        
+        let stackLayout = ASStackLayoutSpec.horizontal()
+        stackLayout.justifyContent = .start
+        stackLayout.alignItems = .start
+        stackLayout.style.flexShrink = 1.0
+        stackLayout.children = [imagePlace]
+        
+        return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
     }
     
 }

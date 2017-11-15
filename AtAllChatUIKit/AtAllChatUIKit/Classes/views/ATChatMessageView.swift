@@ -8,6 +8,7 @@
 
 import UIKit
 import IGListKit
+import AsyncDisplayKit
 
 open class ATChatMessageView: UIView {
     
@@ -18,7 +19,8 @@ open class ATChatMessageView: UIView {
     let spinToken = "spinner"
     
     /// 消息表格
-    public var tableView: ATChatTableView!
+//    public var tableView: ATChatTableView!
+    public var tableView: ASCollectionNode!
     
     /// 文本输入框
     public var messageInputView: ATMessageInputView!
@@ -86,10 +88,8 @@ open class ATChatMessageView: UIView {
     
     /// 是否滚动到表格底部
     var isTableScrollToBottom: Bool {
-        let height = tableView.frame.size.height
-        let contentYoffset = tableView.contentOffset.y
-        let distanceFromBottom = tableView.contentSize.height - contentYoffset
-        if distanceFromBottom < height {
+        NSLog("self.tableView.contentOffset.y = \(self.tableView.contentOffset.y)")
+        if self.tableView.contentOffset.y <= 0 {
             return true
         } else {
             return false
@@ -136,20 +136,16 @@ public extension ATChatMessageView {
         
         //设置建议的行高度
         let layout = UICollectionViewFlowLayout()
-
-        self.tableView = ATChatTableView(frame: .zero, collectionViewLayout: layout)
-        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView = ASCollectionNode(frame: .zero, collectionViewLayout: layout)
+        self.tableView.inverted = true
+        self.tableView.view.translatesAutoresizingMaskIntoConstraints = false
         self.tableView.backgroundColor = UIColor(hex: 0xeaebec)
-        self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
-        self.addSubview(self.tableView)
-        
-        //In iOS 10, a new cell prefetching API was introduced. At Instagram, enabling this feature substantially degraded scrolling performance. We recommend setting isPrefetchingEnabled to NO (false in Swift). Note that the default value is true.
-        if #available(iOS 10, *) {
-            self.tableView.isPrefetchingEnabled = false
-        }
+        self.tableView.view.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
+        self.addSubnode(self.tableView)
         
         //配置列表适配器
-        self.adapter.collectionView = self.tableView
+//        self.adapter.collectionView = self.tableView
+        self.adapter.setASDKCollectionNode(self.tableView)
         self.adapter.dataSource = self
         self.adapter.scrollViewDelegate = self
 
@@ -180,7 +176,7 @@ public extension ATChatMessageView {
     func setupViewConstraints() {
         
         let views: [String: Any] = [
-            "tableView": self.tableView,
+            "tableView": self.tableView.view,
             "messageInputView": self.messageInputView,
             "shareMenuView": self.shareMenuView
         ]
@@ -402,14 +398,14 @@ public extension ATChatMessageView {
     ///
     /// - Parameter animated: 是否显示动画
     public func tableViewScrollToBottomAnimated(_ animated: Bool) {
-        self.tableView.loadMoreOnTop = false
+//        self.tableView.loadMoreOnTop = false
         if !isTableScrollToBottom {
             if self.messages.count == 0 {
                 return
             }
             
             //滚动到底部
-            self.adapter.scroll(to: self.messages.last!, supplementaryKinds: nil, scrollDirection: .vertical, scrollPosition: .bottom, animated: animated)
+            self.adapter.scroll(to: self.messages.first!, supplementaryKinds: nil, scrollDirection: .vertical, scrollPosition: .top, animated: animated)
 
         }
     }
@@ -423,37 +419,18 @@ public extension ATChatMessageView {
      */
     public func add(
         chatMessages: [ATMessageItem],
-        toTopPosition: Bool = true,
+        toBottomPosition: Bool = true,
         isScrollToBottom: Bool = true,
         animated: Bool = false) {
-        if toTopPosition {
-            self.tableView.loadMoreOnTop = true     //设置这个可以使表格顶部加载更多数据后，位置不偏移
+        if toBottomPosition {
             self.messages = chatMessages + self.messages
-            self.loadingMoreData = false
-            
-//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delayLoad * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
-//
-//                if isScrollToBottom {
-//                    self.tableViewScrollToBottomAnimated(true)
-//                }
-//
-//
-//            }
-            
         } else {
-            
             self.messages = self.messages + chatMessages
-            
-//            self.adapter.performUpdates(animated: true, completion: nil)
-//
-//            if isScrollToBottom {
-//                self.tableViewScrollToBottomAnimated(true)
-//            }
         }
-        
-//        self.adapter.performUpdates(animated: true)
+
         self.adapter.performUpdates(animated: animated) {
             (flag) in
+            self.loadingMoreData = false
             if isScrollToBottom {
                 self.tableViewScrollToBottomAnimated(animated)
             }
@@ -471,12 +448,13 @@ public extension ATChatMessageView {
     public func reloadData(messages: [ATMessageItem], isScrollToBottom: Bool = true, animated: Bool = false) {
         self.messages.removeAll()
         self.messages = messages
-        self.adapter.reloadData {
-            (flag) in
-            if isScrollToBottom {
-                self.tableViewScrollToBottomAnimated(animated)
-            }
-        }
+        self.adapter.performUpdates(animated: animated)
+//        self.adapter.reloadData {
+//            (flag) in
+//            if isScrollToBottom {
+//                self.tableViewScrollToBottomAnimated(animated)
+//            }
+//        }
     }
     
     
@@ -544,7 +522,7 @@ extension ATChatMessageView: ListAdapterDataSource {
         
         // 下拉加载更多时，把加载更多的单元格样式添加到列表头
         if self.loadingMoreData {
-            objects.insert(self.spinToken as ListDiffable, at: 0)
+            objects.append(self.spinToken as ListDiffable)
         }
         
         return objects
@@ -563,6 +541,7 @@ extension ATChatMessageView: ListAdapterDataSource {
     public func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }
+    
 }
 
 
@@ -616,7 +595,8 @@ extension ATChatMessageView: UITextViewDelegate{
                 
                 //添加消息到表格最底
                 self.add(chatMessages: [message],
-                         toTopPosition: false,
+                         toBottomPosition: true,
+                         isScrollToBottom: false,
                          animated: true)
                 
                 //完成发送
@@ -637,7 +617,20 @@ extension ATChatMessageView: UITextViewDelegate{
 extension ATChatMessageView: UIScrollViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.isDragging = true
+        let distance = scrollView.contentSize.height - (scrollView.contentOffset.y + scrollView.bounds.height)
+        if distance > 0 && distance <= 44 && scrollView.contentSize.height > 0 {
+            if !loadingMoreData && self.canLoadmore {
+                self.loadingMoreData = true
+//                NSLog("distance = \(distance)")
+                self.adapter.performUpdates(animated: false, completion: nil)
+                
+                let shouldLoad = self.delegate?.shouldLoadMoreMessagesScrollToTop?(view: self) ?? true
+                if shouldLoad {
+//                    NSLog("self.loadingMoreData = \(self.loadingMoreData)")
+                    self.delegate?.loadMoreMessagesScrollTotop?(view: self)
+                }
+            }
+        }
     }
     
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -650,26 +643,8 @@ extension ATChatMessageView: UIScrollViewDelegate {
         }
     }
     
-    public func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                   withVelocity velocity: CGPoint,
-                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        NSLog("pointee.y = \(targetContentOffset.pointee.y)")
-        
-        if self.loadingMoreData {
-            return
-        }
-        let shouldLoad = self.delegate?.shouldLoadMoreMessagesScrollToTop?(view: self) ?? true
-        if shouldLoad {
-            if targetContentOffset.pointee.y == 0  {
-                if !loadingMoreData && self.canLoadmore && self.isDragging == true {
-                    self.loadingMoreData = true
-                    self.adapter.performUpdates(animated: false, completion: nil)
-                    self.delegate?.loadMoreMessagesScrollTotop?(view: self)
-                }
-            }
-        }
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.isDragging = false
-
     }
 
 }
@@ -685,4 +660,6 @@ extension ATChatMessageView {
         }
     }
 }
+
+
 

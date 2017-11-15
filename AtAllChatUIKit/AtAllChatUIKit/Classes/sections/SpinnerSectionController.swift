@@ -8,40 +8,69 @@
 
 import UIKit
 import IGListKit
+import AsyncDisplayKit
 
 
 /// 加载更多的样式
-///
-/// - Returns:
-func SpinnerSectionController() -> ListSingleSectionController {
-    let configureBlock = { (item: Any, cell: UICollectionViewCell) in
-        guard let cell = cell as? SpinnerCell else { return }
-        cell.activityIndicator.startAnimating()
+open class SpinnerSectionController: ListSectionController, ASSectionController {
+    
+    override init() {
+        super.init()
     }
     
-    let sizeBlock = { (item: Any, context: ListCollectionContext?) -> CGSize in
-        guard let context = context else { return .zero }
-        return CGSize(width: context.containerSize.width, height: 44)
+    
+    public func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
+        let node = SpinnerCell()
+        return {
+            return node
+        }
     }
     
-    return ListSingleSectionController(cellClass: SpinnerCell.self,
-                                       configureBlock: configureBlock,
-                                       sizeBlock: sizeBlock)
-}
-
-
-final class SpinnerCell: UICollectionViewCell {
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
-        let view = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-        self.contentView.addSubview(view)
-        return view
-    }()
+    override open func sizeForItem(at index: Int) -> CGSize {
+        return ASIGListSectionControllerMethods.sizeForItem(at: index)
+    }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let bounds = contentView.bounds
-        activityIndicator.center = CGPoint(x: bounds.midX, y: bounds.midY)
+    override open func cellForItem(at index: Int) -> UICollectionViewCell {
+        return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
+    }
+    
+    /// 更新单元格元素
+    ///
+    /// - Parameter object:
+    override open func didUpdate(to object: Any) {
+    
     }
     
 }
+
+
+final class SpinnerCell: ASCellNode {
+    
+    var activityIndicator: ASDisplayNode!
+    
+    override init() {
+        super.init()
+        self.automaticallyManagesSubnodes = true
+        let activity = ASDisplayNode(viewBlock: { () -> UIView in
+            let view = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            return view
+        })
+        self.activityIndicator = activity
+        self.activityIndicator.style.preferredSize = CGSize(width: 20.0, height: 20.0)
+        self.style.height = ASDimensionMake(44)
+    }
+    
+    override func didLoad() {
+        // 配置加载状态
+        let progressView = self.activityIndicator.view as! UIActivityIndicatorView
+        progressView.startAnimating()
+    }
+    
+    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        return ASRelativeLayoutSpec(horizontalPosition: .center, verticalPosition: .center, sizingOption: .minimumHeight, child: self.activityIndicator)
+    }
+    
+}
+
+

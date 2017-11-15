@@ -8,51 +8,81 @@
 
 import UIKit
 import IGListKit
+import AsyncDisplayKit
 
 /// 文本消息分区
-open class ATMessageTextSection: ListSectionController {
-
+open class ATMessageTextSection: ListSectionController, ASSectionController {
+    
     private var message: ATMessageItem!
     
     override init() {
         super.init()
     }
     
-    /// 单元格的尺寸配置
-    ///
-    /// - Parameter index:
-    /// - Returns:
-    override open func sizeForItem(at index: Int) -> CGSize {
-        let constrainedSize = CGSize(
-            width: collectionContext!.containerSize.width * 0.7,
-                                     height: CGFloat.greatestFiniteMagnitude)
-        //计算消息内容的实际高度
-        var contentSize = self.message.text.textSizeWithFont(
-            ATChatMessageViewCell.font, constrainedToSize: constrainedSize)
-//        NSLog("contentSize.height 1 = \(contentSize.height)")
-        contentSize.height = contentSize.height + 90
-//        NSLog("contentSize.height 2 = \(contentSize.height)")
-//        NSLog("message = \(self.message.text)")
-        return CGSize(width: collectionContext!.containerSize.width, height: contentSize.height)
+    open override func numberOfItems() -> Int {
+        return 2
     }
     
-    
-    /// 内容显示
-    ///
-    /// - Parameter index:
-    /// - Returns:
-    override open func cellForItem(at index: Int) -> UICollectionViewCell {
-        
-        guard let cell = collectionContext?.dequeueReusableCell(withNibName: "ATChatMessageViewTextCell", bundle: Bundle(for: self.classForCoder), for: self, at: index) as? ATChatMessageViewCell else {
-                                                                                fatalError()
+    public func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
+        //列表元素排序反方向
+        if index == 0 {
+            let node = ATMessageTextCell(model: self.message)
+            return {
+                return node
+            }
+        } else {
+            let node = ATMessageTimeCell(time: self.message.timestamp)
+            return {
+                return node
+            }
         }
         
-        self.configureCell(cell)
-        
-        return cell
     }
     
-   
+    
+    override open func sizeForItem(at index: Int) -> CGSize {
+        return ASIGListSectionControllerMethods.sizeForItem(at: index)
+    }
+    
+    override open func cellForItem(at index: Int) -> UICollectionViewCell {
+        return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
+    }
+    
+    /*
+     /// 单元格的尺寸配置
+     ///
+     /// - Parameter index:
+     /// - Returns:
+     override open func sizeForItem(at index: Int) -> CGSize {
+     let constrainedSize = CGSize(
+     width: collectionContext!.containerSize.width * 0.7,
+     height: CGFloat.greatestFiniteMagnitude)
+     //计算消息内容的实际高度
+     var contentSize = self.message.text.textSizeWithFont(
+     ATChatMessageViewCell.font, constrainedToSize: constrainedSize)
+     //        NSLog("contentSize.height 1 = \(contentSize.height)")
+     contentSize.height = contentSize.height + 90
+     //        NSLog("contentSize.height 2 = \(contentSize.height)")
+     //        NSLog("message = \(self.message.text)")
+     return CGSize(width: collectionContext!.containerSize.width, height: contentSize.height)
+     }
+     
+     /// 内容显示
+     ///
+     /// - Parameter index:
+     /// - Returns:
+     override open func cellForItem(at index: Int) -> UICollectionViewCell {
+     
+     guard let cell = collectionContext?.dequeueReusableCell(withNibName: "ATChatMessageViewTextCell", bundle: Bundle(for: self.classForCoder), for: self, at: index) as? ATChatMessageViewCell else {
+     fatalError()
+     }
+     
+     self.configureCell(cell)
+     
+     return cell
+     }
+     */
+    
     /// 更新单元格元素
     ///
     /// - Parameter object:
@@ -131,3 +161,5 @@ extension ATMessageTextSection: ATMessageSectionProtocal {
     }
     
 }
+
+

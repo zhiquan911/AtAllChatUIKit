@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C54B32FE1FAF007800340CE1 /* IGListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54B32FD1FAF007700340CE1 /* IGListKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C54B33021FAF077900340CE1 /* VoiceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54B33011FAF077900340CE1 /* VoiceRecord.swift */; };
 		C54B33261FAF0A9200340CE1 /* SCImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C54B33051FAF0A9200340CE1 /* SCImages.xcassets */; };
 		C54B332C1FAF0A9200340CE1 /* ATMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54B330F1FAF0A9200340CE1 /* ATMessageItem.swift */; };
@@ -37,6 +36,8 @@
 		C58ED8601FAC9C2D00982F18 /* ATMessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58ED85F1FAC9C2D00982F18 /* ATMessageTextView.swift */; };
 		C58ED8621FAC9C4900982F18 /* ATMessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58ED8611FAC9C4900982F18 /* ATMessageInputView.swift */; };
 		C5B1DAA51FB44B1500CFD161 /* SpinnerSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B1DAA41FB44B1500CFD161 /* SpinnerSectionController.swift */; };
+		C5B2423F1FB5C8E70082C147 /* IGListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C54B32FD1FAF007700340CE1 /* IGListKit.framework */; };
+		C5B5639D1FB6D0740021E783 /* ATChatTipsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B5639C1FB6D0740021E783 /* ATChatTipsViewCell.swift */; };
 		C5CC54161FB00ABB00F2AC44 /* ATMessageTextSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC54151FB00ABB00F2AC44 /* ATMessageTextSection.swift */; };
 		C5CC54191FB0459800F2AC44 /* ATChatMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC54181FB0459800F2AC44 /* ATChatMessageViewCell.swift */; };
 		C5CC541C1FB056D100F2AC44 /* ATChatMessageViewTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5CC541B1FB056D100F2AC44 /* ATChatMessageViewTextCell.xib */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74266C6DFD9E0EB9FF24C733 /* Pods-AtAllChatUIKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AtAllChatUIKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AtAllChatUIKit/Pods-AtAllChatUIKit.debug.xcconfig"; sourceTree = "<group>"; };
 		C54B32FD1FAF007700340CE1 /* IGListKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IGListKit.framework; path = Carthage/Build/iOS/IGListKit.framework; sourceTree = "<group>"; };
 		C54B33011FAF077900340CE1 /* VoiceRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceRecord.swift; sourceTree = "<group>"; };
 		C54B33051FAF0A9200340CE1 /* SCImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SCImages.xcassets; sourceTree = "<group>"; };
@@ -110,9 +112,15 @@
 		C58ED85F1FAC9C2D00982F18 /* ATMessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATMessageTextView.swift; sourceTree = "<group>"; };
 		C58ED8611FAC9C4900982F18 /* ATMessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATMessageInputView.swift; sourceTree = "<group>"; };
 		C5B1DAA41FB44B1500CFD161 /* SpinnerSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerSectionController.swift; sourceTree = "<group>"; };
+		C5B242401FB5C8E80082C147 /* AsyncDisplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AsyncDisplayKit.framework; path = Carthage/Build/iOS/AsyncDisplayKit.framework; sourceTree = "<group>"; };
+		C5B242411FB5C8E80082C147 /* PINCache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PINCache.framework; path = Carthage/Build/iOS/PINCache.framework; sourceTree = "<group>"; };
+		C5B242421FB5C8E80082C147 /* PINRemoteImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PINRemoteImage.framework; path = Carthage/Build/iOS/PINRemoteImage.framework; sourceTree = "<group>"; };
+		C5B2424C1FB5CE910082C147 /* PINOperation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PINOperation.framework; path = Carthage/Build/iOS/PINOperation.framework; sourceTree = "<group>"; };
+		C5B5639C1FB6D0740021E783 /* ATChatTipsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATChatTipsViewCell.swift; sourceTree = "<group>"; };
 		C5CC54151FB00ABB00F2AC44 /* ATMessageTextSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATMessageTextSection.swift; sourceTree = "<group>"; };
 		C5CC54181FB0459800F2AC44 /* ATChatMessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATChatMessageViewCell.swift; sourceTree = "<group>"; };
 		C5CC541B1FB056D100F2AC44 /* ATChatMessageViewTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATChatMessageViewTextCell.xib; sourceTree = "<group>"; };
+		F4D14E63F33A7A4618A1D547 /* Pods-AtAllChatUIKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AtAllChatUIKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-AtAllChatUIKit/Pods-AtAllChatUIKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54B32FE1FAF007800340CE1 /* IGListKit.framework in Frameworks */,
+				C5B2423F1FB5C8E70082C147 /* IGListKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,9 +143,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D456EFF7307D47D9FDC532E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				74266C6DFD9E0EB9FF24C733 /* Pods-AtAllChatUIKit.debug.xcconfig */,
+				F4D14E63F33A7A4618A1D547 /* Pods-AtAllChatUIKit.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C54B32FC1FAF007700340CE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5B2424C1FB5CE910082C147 /* PINOperation.framework */,
+				C5B242401FB5C8E80082C147 /* AsyncDisplayKit.framework */,
+				C5B242411FB5C8E80082C147 /* PINCache.framework */,
+				C5B242421FB5C8E80082C147 /* PINRemoteImage.framework */,
 				C54B32FD1FAF007700340CE1 /* IGListKit.framework */,
 			);
 			name = Frameworks;
@@ -274,6 +295,7 @@
 				C58ED78D1FAC320800982F18 /* AtAllChatUIKitTests */,
 				C58ED7811FAC320800982F18 /* Products */,
 				C54B32FC1FAF007700340CE1 /* Frameworks */,
+				6D456EFF7307D47D9FDC532E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -332,6 +354,7 @@
 				C58ED85F1FAC9C2D00982F18 /* ATMessageTextView.swift */,
 				C58ED8611FAC9C4900982F18 /* ATMessageInputView.swift */,
 				C5CC54181FB0459800F2AC44 /* ATChatMessageViewCell.swift */,
+				C5B5639C1FB6D0740021E783 /* ATChatTipsViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -383,7 +406,7 @@
 				C58ED77C1FAC320800982F18 /* Frameworks */,
 				C58ED77D1FAC320800982F18 /* Headers */,
 				C58ED77E1FAC320800982F18 /* Resources */,
-				C54B32FF1FAF008800340CE1 /* ShellScript */,
+				C5B242461FB5C9590082C147 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -471,7 +494,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C54B32FF1FAF008800340CE1 /* ShellScript */ = {
+		C5B242461FB5C9590082C147 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -511,6 +534,7 @@
 				C54CCC501FB1B1150095E253 /* UIDevice+extension.swift in Sources */,
 				C5CC54191FB0459800F2AC44 /* ATChatMessageViewCell.swift in Sources */,
 				C58ED8501FAC980E00982F18 /* ATShareMenuView.swift in Sources */,
+				C5B5639D1FB6D0740021E783 /* ATChatTipsViewCell.swift in Sources */,
 				C54CCC511FB1B1150095E253 /* UILabel+extension.swift in Sources */,
 				C57AF12E1FB2D47E00751CB3 /* ATChatMessageViewDelegate.swift in Sources */,
 				C58ED85E1FAC9B7600982F18 /* ATChatTableView.swift in Sources */,
@@ -656,6 +680,7 @@
 		};
 		C58ED7951FAC320800982F18 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74266C6DFD9E0EB9FF24C733 /* Pods-AtAllChatUIKit.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -681,6 +706,7 @@
 		};
 		C58ED7961FAC320800982F18 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4D14E63F33A7A4618A1D547 /* Pods-AtAllChatUIKit.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;

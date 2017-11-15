@@ -16,7 +16,8 @@ extension UIImage {
     /// - Parameter named: 图片名称
     /// - Returns: 图片
     static func loadImage(named: String) -> UIImage? {
-        let img = UIImage(named: named, in: Bundle(for: ATImage.self), compatibleWith: nil)
+        let bundleURL = Bundle(for: ATImage.self).url(forResource: "AtAllChatUIKit", withExtension: "bundle")
+        let img = UIImage(named: named, in: Bundle(url: bundleURL!), compatibleWith: nil)
         return img
     }
 }

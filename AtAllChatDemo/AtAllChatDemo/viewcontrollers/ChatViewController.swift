@@ -63,9 +63,9 @@ class ChatViewController: UIViewController {
             
             self.allMessages.append(msg)
             
-            if index == 59 {
-                break
-            }
+//            if index == 59 {
+//                break
+//            }
         }
        
     }
@@ -74,7 +74,7 @@ class ChatViewController: UIViewController {
         
         var newMessages = [ATMessageItem]()
         
-        if offset == 60 {
+        if offset == 200 {
             return newMessages
         }
         
@@ -108,7 +108,8 @@ extension ChatViewController: ATChatMessageViewDelegate {
         DispatchQueue.main.asyncAfter(
         deadline: DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
             
-            self.chatView.reloadMessages(messages)
+//            self.chatView.reloadMessages(messages)
+            self.chatView.performUpdates(animated: false)
         }
         
         
@@ -124,7 +125,7 @@ extension ChatViewController: ATChatMessageViewDelegate {
                 let newMessages = self.loadMessage(offset: self.offset)
                 if newMessages.count > 0 {
                     self.chatView.add(chatMessages: newMessages,
-                                      toTopPosition: true,
+                                      toBottomPosition: false,
                                       isScrollToBottom: false,
                                       animated: false)
                 } else {

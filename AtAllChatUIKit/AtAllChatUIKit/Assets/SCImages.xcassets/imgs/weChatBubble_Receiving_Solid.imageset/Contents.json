@@ -8,11 +8,11 @@
       "resizing" : {
         "mode" : "9-part",
         "center" : {
-          "mode" : "fill",
+          "mode" : "stretch",
           "width" : 30,
           "height" : 3
         },
-        "capInsets" : {
+        "cap-insets" : {
           "bottom" : 25,
           "top" : 57,
           "right" : 14,
