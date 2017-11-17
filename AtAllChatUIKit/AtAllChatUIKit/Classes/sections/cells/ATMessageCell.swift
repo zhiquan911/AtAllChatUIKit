@@ -73,17 +73,14 @@ class ATMessageTextCell: ASCellNode {
         super.init()
         // Automatic Subnode Management
         self.automaticallyManagesSubnodes = true
+        self.imageViewUserAvatar.style.width = ASDimensionMake(45)
+        self.imageViewUserAvatar.style.height = ASDimensionMake(45)
+        self.progress.style.preferredSize = CGSize(width: 20, height: 20)
+        self.buttonError.style.preferredSize = CGSize(width: 20, height: 20)
         
         self.message = model
         
-        //设置头像
-        let attrs = [NSAttributedStringKey.font: ATMessageTextCell.font]
-        self.labelUserName.attributedText = NSAttributedString(string: model.senderName, attributes: attrs)
-        
-        //消息内容
-        self.labelMessageText.attributedText = NSAttributedString(string: model.text, attributes: attrs)
-        
-        switch model.messageSourceType {
+        switch self.message.messageSourceType {
         //对方作为接收
         case ATMessageItemSourceType.receive:
             self.viewBubble.image = UIImage.loadImage(named: "weChatBubble_Receiving_Solid")
@@ -91,15 +88,17 @@ class ATMessageTextCell: ASCellNode {
         case ATMessageItemSourceType.send:
             self.viewBubble.image = UIImage.loadImage(named: "weChatBubble_Sending_Solid")
         }
-    
+        
+        //设置头像
+        let attrs = [NSAttributedStringKey.font: ATMessageTextCell.font]
+        self.labelUserName.attributedText = NSAttributedString(string: self.message.senderName, attributes: attrs)
+        
+        //消息内容
+        self.labelMessageText.attributedText = NSAttributedString(string: self.message.text, attributes: attrs)
+        
         //用户头像
         self.imageViewUserAvatar.defaultImage = UIImage.loadImage(named: "avator")
-        self.imageViewUserAvatar.url = URL(string: model.avatarUrl)
-        self.imageViewUserAvatar.style.width = ASDimensionMake(45)
-        self.imageViewUserAvatar.style.height = ASDimensionMake(45)
-        
-        self.progress.style.preferredSize = CGSize(width: 20, height: 20)
-        self.buttonError.style.preferredSize = CGSize(width: 20, height: 20)
+        self.imageViewUserAvatar.url = URL(string: self.message.avatarUrl)
     }
     
     
@@ -107,20 +106,8 @@ class ATMessageTextCell: ASCellNode {
     /// 主线程在这里处理UIKit相关的配置
     override func didLoad() {
         
-        // 配置加载状态
-        let progressView = self.progress.view as! UIActivityIndicatorView
-        if self.message.sended {
-            progressView.stopAnimating()
-            progressView.isHidden = true
-        } else {
-            progressView.isHidden = false
-            progressView.startAnimating()
-        }
-        
     }
-    
-    
-    
+ 
     
     /// 布局设置
     ///
@@ -220,7 +207,35 @@ class ATMessageTextCell: ASCellNode {
                                  child: avatarRel)
  
     }
+
     
+    /// 进入显示访问时执行
+    override func didEnterVisibleState() {
+        super.didEnterVisibleState()
+        // UIActivityIndicatorView 带有动画效果，在后台线程会被停止，所以加入到监听显示状态下才执行动画
+        // 配置加载状态
+        let progressView = self.progress.view as! UIActivityIndicatorView
+        if self.message.sended {
+            progressView.stopAnimating()
+            progressView.isHidden = true
+        } else {
+            progressView.isHidden = false
+            progressView.startAnimating()
+        }
+    }
+    
+}
+
+extension ATMessageTextCell: ATMessageCellProtocal {
+    
+    
+    /// 更新消息
+    ///
+    /// - Parameter message:
+    func updateMessageStatus(_ message: ATMessageItem) {
+        self.message = message
+        self.didEnterVisibleState()
+    }
 }
 
 

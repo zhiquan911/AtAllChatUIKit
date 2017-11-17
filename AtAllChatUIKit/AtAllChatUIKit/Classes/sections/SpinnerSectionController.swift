@@ -54,6 +54,7 @@ final class SpinnerCell: ASCellNode {
         self.automaticallyManagesSubnodes = true
         let activity = ASDisplayNode(viewBlock: { () -> UIView in
             let view = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            view.startAnimating()
             return view
         })
         self.activityIndicator = activity
@@ -62,6 +63,12 @@ final class SpinnerCell: ASCellNode {
     }
     
     override func didLoad() {
+        
+    }
+    
+    /// 进入显示访问时执行
+    override func didEnterVisibleState() {
+        super.didEnterVisibleState()
         // 配置加载状态
         let progressView = self.activityIndicator.view as! UIActivityIndicatorView
         progressView.startAnimating()

@@ -13,14 +13,18 @@ import AsyncDisplayKit
 /// 文本消息分区
 open class ATMessageTextSection: ListSectionController, ASSectionController {
     
-    private var message: ATMessageItem!
+    let timeShowInterval: TimeInterval = 60 * 3
     
-    override init() {
+    private var message: ATMessageItem!
+    private var preMessage: ATMessageItem?
+    
+    init(preMessage: ATMessageItem?) {
         super.init()
+        self.preMessage = preMessage
     }
     
     open override func numberOfItems() -> Int {
-        return 2
+        return self.shouldDisplayTime() ? 2 : 1
     }
     
     public func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
@@ -45,7 +49,37 @@ open class ATMessageTextSection: ListSectionController, ASSectionController {
     }
     
     override open func cellForItem(at index: Int) -> UICollectionViewCell {
-        return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
+        let cell = ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
+        return cell
+    }
+    
+    
+    /// 是否显示时间
+    ///
+    /// - Returns:
+    public func shouldDisplayTime() -> Bool {
+        if self.preMessage == nil {
+            return true
+        }
+        
+        let pre = Date(timeIntervalSince1970: TimeInterval(self.preMessage!.timestamp))
+        let current = Date(timeIntervalSince1970: TimeInterval(self.message.timestamp))
+        let interval: TimeInterval = current.timeIntervalSince(pre)
+        if(interval > self.timeShowInterval){  //超过3分钟才显示
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    /// 更新单元格元素
+    ///
+    /// - Parameter object:
+    override open func didUpdate(to object: Any) {
+        guard let object = object as? ATMessageItem else {
+            return
+        }
+        self.message = object
     }
     
     /*
@@ -83,83 +117,9 @@ open class ATMessageTextSection: ListSectionController, ASSectionController {
      }
      */
     
-    /// 更新单元格元素
-    ///
-    /// - Parameter object:
-    override open func didUpdate(to object: Any) {
-        guard let object = object as? ATMessageItem else {
-            return
-        }
-        self.message = object
-    }
+
     
 }
 
-
-// MARK: - 实现通用的委托
-extension ATMessageTextSection: ATMessageSectionProtocal {
-    
-    /// 配置单元格内容
-    ///
-    /// - Parameter cell:
-    func configureCell(_ cell: UICollectionViewCell) {
-        
-        var lblName: UILabel
-        var lblText: UILabel
-        var progressView: UIActivityIndicatorView
-        var buttonUserAvatar: UIButton
-        
-        let cell = cell as! ATChatMessageViewCell
-        
-        switch message.messageSourceType {
-        //对方作为接收
-        case ATMessageItemSourceType.receive:
-            lblName = cell.labelUserNameLeft
-            lblText = cell.labelMessageTextLeft
-            progressView = cell.progressViewLeft
-            buttonUserAvatar = cell.buttonUserAvatarLeft
-            cell.viewMessageLeft.isHidden = false
-            cell.viewMessageRight.isHidden = true
-            
-        //自己作为发送
-        case ATMessageItemSourceType.send:
-            lblName = cell.labelUserNameRight
-            lblText = cell.labelMessageTextRight
-            progressView = cell.progressViewRight
-            buttonUserAvatar = cell.buttonUserAvatarRight
-            cell.viewMessageLeft.isHidden = true
-            cell.viewMessageRight.isHidden = false
-        }
-        
-        // 配置显示时间戳
-        //        self.configureTimestamp(indexPath, cell: cell, message: message)
-        // 配置显示用户名
-        lblName.text = message.senderName
-        // 配置显示消息内容
-        lblText.text = message.text
-        // 配置显示消息内容
-        let shortTime = Date.getShortTimeByStamp(message.timestamp)
-        cell.labelTimeStamp.text = shortTime;
-        
-        // 配置加载状态
-        if self.message.sended {
-            progressView.stopAnimating()
-            progressView.isHidden = true
-        } else {
-            progressView.isHidden = false
-            progressView.startAnimating()
-        }
-        
-        //用户头像
-        if message.avatar != nil {
-            buttonUserAvatar.setImage(message.avatar!, for: .normal)
-        }
-        //        else {
-        //            cell.buttonUserAvatar.imageView?.af_setImageWithURL(NSURL(string: message.avatarUrl)!, placeholderImage: UIImage.loadImage(named: "avator"))
-        //        }
-        
-    }
-    
-}
 
 

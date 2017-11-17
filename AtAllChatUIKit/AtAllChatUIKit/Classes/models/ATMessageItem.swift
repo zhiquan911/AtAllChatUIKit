@@ -12,15 +12,15 @@ import AVFoundation
 import IGListKit
 
 /**
-消息媒体类型
-
-- Text:          文本
-- Photo:         图像
-- Video:         视频
-- Voice:         语音
-- Emotion:       表情
-- LocalPosition: 地理位置
-*/
+ 消息媒体类型
+ 
+ - Text:          文本
+ - Photo:         图像
+ - Video:         视频
+ - Voice:         语音
+ - Emotion:       表情
+ - LocalPosition: 地理位置
+ */
 public enum ATMessageItemType {
     case text, photo, video, voice
     //, Emotion, LocalPosition
@@ -84,48 +84,49 @@ public class ATMessageItem: NSObject {
     public var thumbnailPhoto: UIImage!
     public var thumbnailUrl: String!
     public var originPhotoUrl: String!
-//    var originPhotoPath: String! {
-//        didSet {
-//            let file = SCConstants.photoFileFolder.URLByAppendingPathComponent(self.originPhotoPath)
-//            let image = UIImage(contentsOfFile: file.path!)
-//            self.thumbnailPhoto = image
-//            self.photo = image
-//        }
-//    }
+    //    var originPhotoPath: String! {
+    //        didSet {
+    //            let file = SCConstants.photoFileFolder.URLByAppendingPathComponent(self.originPhotoPath)
+    //            let image = UIImage(contentsOfFile: file.path!)
+    //            self.thumbnailPhoto = image
+    //            self.photo = image
+    //        }
+    //    }
     
     /************ 视频相关 ************/
     var videoPath: String!
     var videoUrl: String!
     var videoDuration: String!
     
-//    convenience init(videoPath: String) {
-//        self.init()
-//        self.messageMediaType = SCMessageMediaType.Video
-//        self.videoPath = videoPath
-//        self.setThumbnailPhotoByVideoPath(self.videoPath)
-//    }
-//
-//    func setThumbnailPhotoByVideoPath(videoPath: String) {
-//        var newImage: UIImage?
-//        do {
-//            let asset = AVURLAsset(URL: SCConstants.videoFileFolder.URLByAppendingPathComponent(self.videoPath))
-//            let assetImageGenerator = AVAssetImageGenerator(asset: asset)
-//            assetImageGenerator.appliesPreferredTrackTransform = true
-//            assetImageGenerator.apertureMode = AVAssetImageGeneratorApertureModeEncodedPixels
-//
-//            let thumbnailImageRef: CGImageRef
-//            let thumbnailImageTime: Int64  = 0;
-//
-//            thumbnailImageRef = try assetImageGenerator.copyCGImageAtTime(CMTimeMake(thumbnailImageTime, 60), actualTime: nil)
-//
-//            newImage = UIImage(CGImage: thumbnailImageRef)
-//        } catch let error as NSError  {
-//            NSLog("setThumbnailPhotoByVideoPath error: \(error)")
-//        }
-//        if newImage != nil {
-//            self.thumbnailPhoto =  newImage
-//        }
-//    }
+    //    convenience init(videoPath: String) {
+    //        self.init()
+    //        self.messageMediaType = SCMessageMediaType.Video
+    //        self.videoPath = videoPath
+    //        self.setThumbnailPhotoByVideoPath(self.videoPath)
+    //    }
+    //
+    //    func setThumbnailPhotoByVideoPath(videoPath: String) {
+    //        var newImage: UIImage?
+    //        do {
+    //            let asset = AVURLAsset(URL: SCConstants.videoFileFolder.URLByAppendingPathComponent(self.videoPath))
+    //            let assetImageGenerator = AVAssetImageGenerator(asset: asset)
+    //            assetImageGenerator.appliesPreferredTrackTransform = true
+    //            assetImageGenerator.apertureMode = AVAssetImageGeneratorApertureModeEncodedPixels
+    //
+    //            let thumbnailImageRef: CGImageRef
+    //            let thumbnailImageTime: Int64  = 0;
+    //
+    //            thumbnailImageRef = try assetImageGenerator.copyCGImageAtTime(CMTimeMake(thumbnailImageTime, 60), actualTime: nil)
+    //
+    //            newImage = UIImage(CGImage: thumbnailImageRef)
+    //        } catch let error as NSError  {
+    //            NSLog("setThumbnailPhotoByVideoPath error: \(error)")
+    //        }
+    //        if newImage != nil {
+    //            self.thumbnailPhoto =  newImage
+    //        }
+    //    }
+    
     
 }
 
@@ -138,11 +139,24 @@ extension ATMessageItem: ListDiffable {
     }
     
     public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        return true
+        guard self !== object else { return true }
+        guard let object = object as? ATMessageItem else { return false }
+        
+        if self.messageId == object.messageId
+            && self.senderId == object.senderId
+            && self.sended == object.sended
+            && self.text == object.text
+            && self.timestamp == object.timestamp
+            && self.isRead == object.isRead
+            && self.isError == object.isError{
+            return true
+        } else {
+            return false
+        }
+        
     }
     
 }
-
 
 /// 消息附件
 public class ATMessageAttachment {
@@ -168,5 +182,5 @@ public class ATMessageAttachment {
     
     /// 格式
     public var format: String = ""
-
+    
 }

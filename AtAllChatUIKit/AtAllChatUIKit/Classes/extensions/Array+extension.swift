@@ -19,4 +19,16 @@ extension Array where Element: Equatable {
             self.removeObject(object)
         }
     }
+    
+    func Object(after object: Element) -> Element? {
+        let element: Element?
+        guard var index = self.index(of: object) else {
+            return nil
+        }
+        guard (index + 1) < self.count else {
+            return nil
+        }
+        element = self[index + 1]
+        return element
+    }
 }

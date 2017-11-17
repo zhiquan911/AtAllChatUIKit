@@ -37,6 +37,9 @@ open class ATChatMessageView: UIView {
     /// 消息发送者，当天控制聊天的用户唯一键值
     public var userkey: String = ""
     
+    /// 消息发送者昵称
+    public var username: String = ""
+    
     /// 当用户滚动视图时是否不滚动到底部
     public var shouldPreventScrollToBottomWhileUserScrolling: Bool = false
     
@@ -85,6 +88,7 @@ open class ATChatMessageView: UIView {
     public var loadingMoreData: Bool = false
     
     public var canLoadmore: Bool = true
+    
     
     /// 是否滚动到表格底部
     var isTableScrollToBottom: Bool {
@@ -449,12 +453,6 @@ public extension ATChatMessageView {
         self.messages.removeAll()
         self.messages = messages
         self.adapter.performUpdates(animated: animated)
-//        self.adapter.reloadData {
-//            (flag) in
-//            if isScrollToBottom {
-//                self.tableViewScrollToBottomAnimated(animated)
-//            }
-//        }
     }
     
     
@@ -482,17 +480,17 @@ public extension ATChatMessageView {
     /// - Parameter message:
     public func reloadMessage(_ message: ATMessageItem) {
         
-        guard let section = self.adapter.sectionController(for: message) else {
+        let section = self.adapter.section(for: message)
+        guard section != NSNotFound else {
             return
         }
-        
-        guard let cell = section.collectionContext?.cellForItem(at: 0, sectionController: section) as? ATChatMessageViewCell else {
+        guard let cellNode = self.tableView.nodeForItem(at: IndexPath(item: 0, section: section)) as? ATMessageCellProtocal else {
             return
         }
-        
-        //刷新UI
-        section.configureCellBySubclass(cell)
+        //刷新显示状态
+        cellNode.updateMessageStatus(message)
     }
+
     
     /**
      完成发送消息
@@ -533,9 +531,11 @@ extension ATChatMessageView: ListAdapterDataSource {
         //如果行元素为加载更多标识，显示加载更多分区样式
         if let obj = object as? String, obj == self.spinToken {
             return SpinnerSectionController()
+        } else {
+            let obj = object as! ATMessageItem
+            let preMessage = self.messages.Object(after: obj)
+            return ATMessageTextSection(preMessage: preMessage)
         }
-        
-        return ATMessageTextSection()
     }
     
     public func emptyView(for listAdapter: ListAdapter) -> UIView? {
@@ -584,11 +584,12 @@ extension ATChatMessageView: UITextViewDelegate{
                 let timestamp = Date().timeIntervalSince1970
                 message.messageId = self.userkey + timestamp.toString()
                 message.senderId = self.userkey
+                message.senderName = self.username
                 message.sended = false;
                 message.messageMediaType = .text
                 message.text = textView.text;
                 message.messageSourceType = .send;
-                message.timestamp = Int64(timestamp * 1000)
+                message.timestamp = Int64(timestamp)
                 
                 //委托发送消息处理
                 self.delegate?.chatView?(view: self, didSendMessage: [message])

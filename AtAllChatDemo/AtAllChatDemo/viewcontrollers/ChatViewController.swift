@@ -17,11 +17,14 @@ class ChatViewController: UIViewController {
     
     var userkey = "123"   //指定一个用户ID为当前发送
     
+    var username = "LI LEI"
+    
     var offset: Int = 0   //当前消息的偏移量
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.chatView.userkey = self.userkey   //指定一个用户ID为当前发送
+        self.chatView.username = self.username
         self.chatView.shareMenuViewDelegate = self
         self.loadAllMessagesFromFile()          //加载用例数据
         let newMessages = self.loadMessage(offset: self.offset)
@@ -63,9 +66,6 @@ class ChatViewController: UIViewController {
             
             self.allMessages.append(msg)
             
-//            if index == 59 {
-//                break
-//            }
         }
        
     }
@@ -74,7 +74,7 @@ class ChatViewController: UIViewController {
         
         var newMessages = [ATMessageItem]()
         
-        if offset == 200 {
+        if offset == self.allMessages.count {
             return newMessages
         }
         
@@ -100,16 +100,15 @@ extension ChatViewController: ATChatMessageViewDelegate {
     
     func chatView(view: ATChatMessageView, didSendMessage messages: [ATMessageItem]) {
         
-        for msg in messages {
-            msg.sended = true
-            msg.senderName = "LI LEI"
-        }
-        
         DispatchQueue.main.asyncAfter(
-        deadline: DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
+        deadline: DispatchTime.now() + Double(Int64(1.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
             
-//            self.chatView.reloadMessages(messages)
-            self.chatView.performUpdates(animated: false)
+            for msg in messages {
+                msg.sended = true
+                msg.senderName = "LI LEI"
+            }
+            
+            self.chatView.reloadMessages(messages)
         }
         
         
