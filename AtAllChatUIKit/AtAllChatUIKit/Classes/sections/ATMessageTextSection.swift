@@ -17,10 +17,12 @@ open class ATMessageTextSection: ListSectionController, ASSectionController {
     
     private var message: ATMessageItem!
     private var preMessage: ATMessageItem?
+    private var inverted: Bool = false
     
-    init(preMessage: ATMessageItem?) {
+    init(preMessage: ATMessageItem?, inverted: Bool) {
         super.init()
         self.preMessage = preMessage
+        self.inverted = inverted
     }
     
     open override func numberOfItems() -> Int {
@@ -29,18 +31,30 @@ open class ATMessageTextSection: ListSectionController, ASSectionController {
     
     public func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
         //列表元素排序反方向
-        if index == 0 {
-            let node = ATMessageTextCell(model: self.message)
-            return {
-                return node
+        var node: ASCellNode
+        let count = self.numberOfItems()
+        
+        // 表格如果翻转则先显示消息再显示时间
+        if self.inverted {
+            if index == 0 {
+                node = ATMessageTextCell(model: self.message)
+            } else {
+                node = ATMessageTimeCell(time: self.message.timestamp)
             }
+            
         } else {
-            let node = ATMessageTimeCell(time: self.message.timestamp)
-            return {
-                return node
+            // 没有翻转，而且行数为2，先显示时间，再显示消息
+            if index == 0 && count == 2 {
+                node = ATMessageTimeCell(time: self.message.timestamp)
+                
+            } else {
+                node = ATMessageTextCell(model: self.message)
             }
         }
         
+        return {
+            return node
+        }
     }
     
     
@@ -117,7 +131,7 @@ open class ATMessageTextSection: ListSectionController, ASSectionController {
      }
      */
     
-
+    
     
 }
 

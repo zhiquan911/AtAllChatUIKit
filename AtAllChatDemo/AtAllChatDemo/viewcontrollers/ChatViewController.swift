@@ -16,19 +16,20 @@ class ChatViewController: UIViewController {
     var allMessages = [ATMessageItem]()
     
     var userkey = "123"   //指定一个用户ID为当前发送
-    
     var username = "LI LEI"
     
     var offset: Int = 0   //当前消息的偏移量
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSLog("automaticallyAdjustsScrollViewInsets = \(self.automaticallyAdjustsScrollViewInsets)")
+        NSLog("edgesForExtendedLayout = \(self.edgesForExtendedLayout)")
         self.chatView.userkey = self.userkey   //指定一个用户ID为当前发送
         self.chatView.username = self.username
         self.chatView.shareMenuViewDelegate = self
         self.loadAllMessagesFromFile()          //加载用例数据
         let newMessages = self.loadMessage(offset: self.offset)
-        self.chatView.reloadData(messages: newMessages)
+        self.chatView.reloadData(messages: newMessages, inverted: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {

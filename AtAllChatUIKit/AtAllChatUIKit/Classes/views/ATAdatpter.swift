@@ -11,7 +11,6 @@ import IGListKit
 public class ATListAdapter: ListAdapter {
 
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        NSLog("scrollViewWillEndDragging")
     }
     
 }

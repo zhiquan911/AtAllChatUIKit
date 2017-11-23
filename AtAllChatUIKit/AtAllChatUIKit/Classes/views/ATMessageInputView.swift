@@ -46,12 +46,12 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
     /**
      *  是否允许发送语音
      */
-    public var allowsSendVoice: Bool = true // default is YES
+    public var allowsSendVoice: Bool = false // default is YES
     
     /**
      *  是否允许发送多媒体
      */
-    public var allowsSendMultiMedia: Bool = true // default is YES
+    public var allowsSendMultiMedia: Bool = false // default is YES
     
     /**
      *  是否支持发送表情
@@ -167,7 +167,7 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
         let horizontalPadding: Float = 6.0
         
         // 垂直间隔
-        let verticalPadding: Float = 5.0
+        let verticalPadding: Float = 6.0
         
         // 输入框
         let textViewLeftMargin: Float = 6.0

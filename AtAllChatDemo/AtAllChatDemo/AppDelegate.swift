@@ -7,15 +7,27 @@
 //
 
 import UIKit
+import AIChatKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    /// 配置AIChat
+    func setupAIChat() {
+        
+        AIChat.setupWithOption(
+            appKey: "2d68067484a20f1a346b3cf28a898ed7f5736f5bacf0fe60449da95efdb97ad4",
+            secret: "0dd1e322907ad7f55deaa35fec2aac97cae7931454d734364bc63f3e9b9f993a",
+            channel: "demo",
+            isProduction: false)
+        AIChat.addListener(self)
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        self.setupAIChat()
         return true
     }
 
@@ -44,3 +56,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+// MARK: - AIChatKit相关方法实现
+extension AppDelegate: AIChatListener {
+    
+    
+    func didReceiveAIChatMessage(message: AIChatMessage,conversation: AIConversation) {
+        NSLog("AIChat didReceiveAIChatMessage")
+        
+        //        "chatMessage":
+        //        {"content":"5555","msgType":1,"msgid":"8803","receiverkey":"4d140540e6c0b9c4eadc347d1d8c0ea88090667a92445c308b3c4bb854759300","sendTime":1508408197,"senderkey":"4d140540e6c0b9c4eadc347d1d8c0ea88090667a92445c308b3c4bb854759300","title":"5555"},
+        //
+        //        "conversation":{"conversationName":"Nick","conversationType":"0","conversationid":"8567","lastSendMsgTime":"1508408197","lastSendMsgid":"8803","number":"920956358931517440",
+        //
+        //            "objectModel":{"allowType":"0","avatarUrl":"","extAttr":"","language":"","msgSettings":"0","nickname":"Nick","online":"1","role":"1","userkey":"4d140540e6c0b9c4eadc347d1d8c0ea88090667a92445c308b3c4bb854759300","username":"Nick"},
+        
+        //"objectkey":"4d140540e6c0b9c4eadc347d1d8c0ea88090667a92445c308b3c4bb854759300","unreadCount":"1",
+        //
+        //            "userInfo":{"allowType":"0","avatarUrl":"","extAttr":"","language":"","msgSettings":"0","nickname":"Nick","online":"1","role":"1","userkey":"4d140540e6c0b9c4eadc347d1d8c0ea88090667a92445c308b3c4bb854759300","username":"Nick"}}},
+        //
+        //            "method":"didReceiveAIChatMessage","protocol":"1","seq":"1508408197","type":"1","ver":"v1"}
+        
+        
+        
+        //发送最近对话更新消息
+        NotificationCenter.default
+            .post(name: Notification.Name(rawValue: "pushConversation"), object: nil)
+        
+        //发送聊天记录更新消息
+        NotificationCenter.default
+            .post(name: Notification.Name(rawValue: "pushChatMessage"), object: nil)
+        
+        
+    }
+    
+    func didReceiveAIGroupTips(operator: AIGroupMember, group: AIGroup, type: String, members: [AIGroupMember]) {
+        NSLog("AIChat didReceiveAIGroupTips")
+    }
+    
+    func didReceiveAIGroupSystemNotify(operator: AIGroupMember, group: AIGroup, type: String, reason: String) {
+        NSLog("AIChat didReceiveAIGroupSystemNotify")
+    }
+    
+    /// 处理来自AIChatKit的消息通知
+    func didConnectionChangedAIChat(isConnected: Bool) {
+        NSLog("AIChat 连接服务器状态 = \(isConnected)")
+    }
+    
+    func didReceiveAIFriendshipChange(friendship: AIFriendship, status: String) {
+        NSLog("AIChat didReceiveAIFriendshipChange")
+    }
+    
+    func didReceiveAIGroupChange(group: AIGroup, status: String) {
+        NSLog("AIChat didReceiveAIGroupChange")
+    }
+    
+    
+    
+    
+}

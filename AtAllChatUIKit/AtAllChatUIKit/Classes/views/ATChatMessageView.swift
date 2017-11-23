@@ -47,10 +47,10 @@ open class ATChatMessageView: UIView {
     public var progressViewLoadMore: UIActivityIndicatorView!
     
     /// 是否允许可以发送语音
-    public var allowsSendVoice: Bool = true
+    public var allowsSendVoice: Bool = false
     
     /// 是否允许发送多媒体
-    public var allowsSendMultiMedia: Bool = true
+    public var allowsSendMultiMedia: Bool = false
     
     /// 组件代理
     @IBOutlet weak public var delegate: ATChatMessageViewDelegate?
@@ -89,11 +89,23 @@ open class ATChatMessageView: UIView {
     
     public var canLoadmore: Bool = true
     
+    /// 是否XIB或Storyboard布局
+    var isLayoutXIB: Bool = false
     
     /// 是否滚动到表格底部
     var isTableScrollToBottom: Bool {
-        NSLog("self.tableView.contentOffset.y = \(self.tableView.contentOffset.y)")
-        if self.tableView.contentOffset.y <= 0 {
+        
+        var height: CGFloat = 0
+        var distanceFromBottom: CGFloat = 0
+        if self.tableView.inverted {
+            height = 0
+            distanceFromBottom = self.tableView.contentOffset.y
+        } else {
+            height = tableView.frame.size.height
+            let contentYoffset = tableView.contentOffset.y
+            distanceFromBottom = tableView.view.contentSize.height - contentYoffset
+        }
+        if distanceFromBottom < height {
             return true
         } else {
             return false
@@ -116,9 +128,26 @@ open class ATChatMessageView: UIView {
     
     open override func awakeFromNib() {
         super.awakeFromNib()
+        self.isLayoutXIB = true
         self.setupUI()
+        
     }
     
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // 非XIB布局需要，表格反转，需要导致Inset，但XIB的布局就不需要，未知原因带Fix
+        if !self.isLayoutXIB && self.tableView.inverted {
+            let inset = self.topBarsHeight()
+            self.tableView.contentInset = UIEdgeInsetsMake(-inset, 0, inset, 0)
+            self.tableView.view.scrollIndicatorInsets = UIEdgeInsetsMake(-inset, 0, inset, 0)
+        } else {
+            self.tableView.contentInset = UIEdgeInsets.zero
+            self.tableView.view.scrollIndicatorInsets = UIEdgeInsets.zero
+        }
+        
+        
+    }
 }
 
 
@@ -145,6 +174,8 @@ public extension ATChatMessageView {
         self.tableView.view.translatesAutoresizingMaskIntoConstraints = false
         self.tableView.backgroundColor = UIColor(hex: 0xeaebec)
         self.tableView.view.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
+        self.tableView.view.bounces = true
+        self.tableView.view.alwaysBounceVertical = true
         self.addSubnode(self.tableView)
         
         //配置列表适配器
@@ -230,6 +261,12 @@ public extension ATChatMessageView {
         
     }
     
+    func topBarsHeight() -> CGFloat {
+        if (self.viewController?.edgesForExtendedLayout.rawValue ?? 0 & UIRectEdge.top.rawValue) == 0 {
+            return 0
+        }
+        return (self.viewController?.navigationController?.navigationBar.frame.height ?? 0) + UIApplication.shared.statusBarFrame.height
+    }
     
     /// 添加通知监听方法
     func addNotification() {
@@ -408,8 +445,19 @@ public extension ATChatMessageView {
                 return
             }
             
+            if self.tableView.inverted {
+                var contentOffset = self.tableView.contentOffset
+                contentOffset.y = 0
+                self.tableView.setContentOffset(contentOffset, animated: animated)
+            } else {
+                var contentOffset = self.tableView.contentOffset
+                contentOffset.y = self.tableView.view.contentSize.height - self.tableView.bounds.height
+                self.tableView.setContentOffset(contentOffset, animated: animated)
+            }
+            
             //滚动到底部
-            self.adapter.scroll(to: self.messages.first!, supplementaryKinds: nil, scrollDirection: .vertical, scrollPosition: .top, animated: animated)
+            //                self.adapter.scroll(to: item, supplementaryKinds: nil, scrollDirection: .vertical, scrollPosition: scrollDirect, animated: animated)
+            
 
         }
     }
@@ -426,10 +474,23 @@ public extension ATChatMessageView {
         toBottomPosition: Bool = true,
         isScrollToBottom: Bool = true,
         animated: Bool = false) {
-        if toBottomPosition {
-            self.messages = chatMessages + self.messages
+        var toBottomPosition = toBottomPosition
+        
+        var addMessages = chatMessages
+        
+        //考虑倒置表格的情况
+        if self.tableView.inverted == false {
+            toBottomPosition = !toBottomPosition
+            //倒置元素
+            addMessages = addMessages.reversed()
         } else {
-            self.messages = self.messages + chatMessages
+            addMessages = chatMessages
+        }
+        
+        if toBottomPosition {
+            self.messages = addMessages + self.messages
+        } else {
+            self.messages = self.messages + addMessages
         }
 
         self.adapter.performUpdates(animated: animated) {
@@ -449,12 +510,24 @@ public extension ATChatMessageView {
     ///   - messages: 消息数组
     ///   - isScrollToBottom: 是否滚动到底部
     ///   - animated: 是否动画
-    public func reloadData(messages: [ATMessageItem], isScrollToBottom: Bool = true, animated: Bool = false) {
+    ///   - inverted: 表格是否翻转
+    public func reloadData(messages: [ATMessageItem],
+                           isScrollToBottom: Bool = true,
+                           animated: Bool = false,
+                           inverted: Bool = false) {
+        
         self.messages.removeAll()
-        self.messages = messages
-        self.adapter.performUpdates(animated: animated)
+        self.tableView.inverted = inverted
+        
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        
+        self.add(chatMessages: messages,
+                 toBottomPosition: false,
+                 isScrollToBottom: isScrollToBottom,
+                 animated: animated)
+        
     }
-    
     
     /// 更新数据
     ///
@@ -533,8 +606,14 @@ extension ATChatMessageView: ListAdapterDataSource {
             return SpinnerSectionController()
         } else {
             let obj = object as! ATMessageItem
-            let preMessage = self.messages.Object(after: obj)
-            return ATMessageTextSection(preMessage: preMessage)
+            var preMessage: ATMessageItem?
+            if self.tableView.inverted {
+                preMessage = self.messages.Object(after: obj)
+            } else {
+                preMessage = self.messages.Object(before: obj)
+            }
+            
+            return ATMessageTextSection(preMessage: preMessage, inverted: self.tableView.inverted)
         }
     }
     
@@ -597,7 +676,7 @@ extension ATChatMessageView: UITextViewDelegate{
                 //添加消息到表格最底
                 self.add(chatMessages: [message],
                          toBottomPosition: true,
-                         isScrollToBottom: false,
+                         isScrollToBottom: true,
                          animated: true)
                 
                 //完成发送
@@ -618,6 +697,7 @@ extension ATChatMessageView: UITextViewDelegate{
 extension ATChatMessageView: UIScrollViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        NSLog("contentOffset.y = \(self.tableView.contentOffset.y)")
         let distance = scrollView.contentSize.height - (scrollView.contentOffset.y + scrollView.bounds.height)
         if distance > 0 && distance <= 44 && scrollView.contentSize.height > 0 {
             if !loadingMoreData && self.canLoadmore {

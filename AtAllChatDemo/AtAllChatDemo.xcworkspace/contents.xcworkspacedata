@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../../../ios/AIPush-ios-sdk/AIPushKit/AIPushKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:AtAllChatDemo.xcodeproj">
    </FileRef>
    <FileRef

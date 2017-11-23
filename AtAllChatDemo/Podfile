@@ -4,4 +4,5 @@ use_frameworks!
 
 target 'AtAllChatDemo' do
   pod 'AtAllChatUIKit', :path => '../AtAllChatUIKit/'
+  pod 'SVProgressHUD'
 end

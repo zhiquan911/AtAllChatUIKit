@@ -13,6 +13,9 @@ class ATMessageTextCell: ASCellNode {
     /// 内容文字大小
     static let font: UIFont = UIFont.systemFont(ofSize: 14)
     
+    /// 图像最少高度
+    var avatarMinHeight: CGFloat = 40
+    
     /// 消息实例
     private var message: ATMessageItem!
     
@@ -73,8 +76,8 @@ class ATMessageTextCell: ASCellNode {
         super.init()
         // Automatic Subnode Management
         self.automaticallyManagesSubnodes = true
-        self.imageViewUserAvatar.style.width = ASDimensionMake(45)
-        self.imageViewUserAvatar.style.height = ASDimensionMake(45)
+        self.imageViewUserAvatar.style.width = ASDimensionMake(self.avatarMinHeight)
+        self.imageViewUserAvatar.style.height = ASDimensionMake(self.avatarMinHeight)
         self.progress.style.preferredSize = CGSize(width: 20, height: 20)
         self.buttonError.style.preferredSize = CGSize(width: 20, height: 20)
         
@@ -97,7 +100,7 @@ class ATMessageTextCell: ASCellNode {
         self.labelMessageText.attributedText = NSAttributedString(string: self.message.text, attributes: attrs)
         
         //用户头像
-        self.imageViewUserAvatar.defaultImage = UIImage.loadImage(named: "avator")
+        self.imageViewUserAvatar.defaultImage = ATConstants.defaultAvatar
         self.imageViewUserAvatar.url = URL(string: self.message.avatarUrl)
     }
     
@@ -136,6 +139,7 @@ class ATMessageTextCell: ASCellNode {
         contentStack.spacing = 0
         contentStack.style.flexGrow = 1
         contentStack.style.alignSelf = .stretch
+        contentStack.style.minHeight = ASDimensionMake(self.avatarMinHeight)
     
         let statusLayout = ASWrapperLayoutSpec(layoutElements: [
             self.buttonError,
@@ -198,10 +202,10 @@ class ATMessageTextCell: ASCellNode {
         contentLayout.background = self.viewBubble
         contentLayout.style.flexShrink = 1
         
-        nameStack.children = [
-            ASInsetLayoutSpec(insets: usernameInsets, child: self.labelUserName),
-            contentStack
-        ]
+        if !(self.labelUserName.attributedText?.string.isEmpty ?? true) {
+            nameStack.children?.append(ASInsetLayoutSpec(insets: usernameInsets, child: self.labelUserName))
+        }
+        nameStack.children?.append(contentStack)
         
         return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8),
                                  child: avatarRel)
