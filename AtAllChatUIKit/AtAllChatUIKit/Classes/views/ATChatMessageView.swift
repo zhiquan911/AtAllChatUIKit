@@ -265,6 +265,9 @@ public extension ATChatMessageView {
         if (self.viewController?.edgesForExtendedLayout.rawValue ?? 0 & UIRectEdge.top.rawValue) == 0 {
             return 0
         }
+        if !(self.viewController?.navigationController?.navigationBar.isTranslucent ?? true) {
+            return 0
+        }
         return (self.viewController?.navigationController?.navigationBar.frame.height ?? 0) + UIApplication.shared.statusBarFrame.height
     }
     
