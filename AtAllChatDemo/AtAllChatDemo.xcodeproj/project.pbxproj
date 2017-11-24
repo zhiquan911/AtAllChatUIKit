@@ -15,12 +15,6 @@
 		C57AF12B1FB2AD4600751CB3 /* DemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57AF12A1FB2AD4600751CB3 /* DemoListViewController.swift */; };
 		C5B3C0FB1FC2B30C00AD6026 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B3C0FA1FC2B30C00AD6026 /* ContactsViewController.swift */; };
 		C5B3C0FD1FC2B37A00AD6026 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B3C0FC1FC2B37A00AD6026 /* LoginViewController.swift */; };
-		C5B3C1121FC2BFCE00AD6026 /* AIPushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5B3C1111FC2BFCE00AD6026 /* AIPushKit.framework */; };
-		C5B3C1131FC2BFCE00AD6026 /* AIPushKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5B3C1111FC2BFCE00AD6026 /* AIPushKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5B3C1151FC2BFCE00AD6026 /* AIPushDepOCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5B3C1141FC2BFCE00AD6026 /* AIPushDepOCKit.framework */; };
-		C5B3C1161FC2BFCE00AD6026 /* AIPushDepOCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5B3C1141FC2BFCE00AD6026 /* AIPushDepOCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5B3C1181FC2BFCE00AD6026 /* AIChatKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5B3C1171FC2BFCE00AD6026 /* AIChatKit.framework */; };
-		C5B3C1191FC2BFCE00AD6026 /* AIChatKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5B3C1171FC2BFCE00AD6026 /* AIChatKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C5B3C1261FC2CF6A00AD6026 /* Sync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5B3C1251FC2CF6A00AD6026 /* Sync.framework */; };
 		C5B3C1281FC2CF7400AD6026 /* Sync.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5B3C1251FC2CF6A00AD6026 /* Sync.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C5B3C12A1FC2E5FE00AD6026 /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B3C1291FC2E5FE00AD6026 /* ConversationsViewController.swift */; };
@@ -32,6 +26,14 @@
 		C5B77EB61FAEB94400156874 /* AtAllChatDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B77EB51FAEB94400156874 /* AtAllChatDemoTests.swift */; };
 		C5BE4C2A1FC3D4C6000C3697 /* ChatOnLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BE4C291FC3D4C6000C3697 /* ChatOnLineViewController.swift */; };
 		C5CC541F1FB0818400F2AC44 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC541E1FB0818400F2AC44 /* DemoView.swift */; };
+		C5FA146F1FC816A900110700 /* AIPushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA146E1FC816A900110700 /* AIPushKit.framework */; };
+		C5FA14701FC816A900110700 /* AIPushKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA146E1FC816A900110700 /* AIPushKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C5FA14721FC816A900110700 /* AIPushDepOCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14711FC816A900110700 /* AIPushDepOCKit.framework */; };
+		C5FA14731FC816A900110700 /* AIPushDepOCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14711FC816A900110700 /* AIPushDepOCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C5FA14751FC816A900110700 /* AINotificationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14741FC816A900110700 /* AINotificationKit.framework */; };
+		C5FA14761FC816A900110700 /* AINotificationKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14741FC816A900110700 /* AINotificationKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C5FA14781FC816A900110700 /* AIChatKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14771FC816A900110700 /* AIChatKit.framework */; };
+		C5FA14791FC816A900110700 /* AIChatKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14771FC816A900110700 /* AIChatKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,10 +63,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C5B3C1191FC2BFCE00AD6026 /* AIChatKit.framework in Embed Frameworks */,
-				C5B3C1131FC2BFCE00AD6026 /* AIPushKit.framework in Embed Frameworks */,
-				C5B3C1161FC2BFCE00AD6026 /* AIPushDepOCKit.framework in Embed Frameworks */,
+				C5FA14761FC816A900110700 /* AINotificationKit.framework in Embed Frameworks */,
 				C5B3C1281FC2CF7400AD6026 /* Sync.framework in Embed Frameworks */,
+				C5FA14701FC816A900110700 /* AIPushKit.framework in Embed Frameworks */,
+				C5FA14791FC816A900110700 /* AIChatKit.framework in Embed Frameworks */,
+				C5FA14731FC816A900110700 /* AIPushDepOCKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,12 +83,6 @@
 		C57AF12A1FB2AD4600751CB3 /* DemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoListViewController.swift; sourceTree = "<group>"; };
 		C5B3C0FA1FC2B30C00AD6026 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		C5B3C0FC1FC2B37A00AD6026 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		C5B3C10E1FC2BF7400AD6026 /* AIChatKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIChatKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIChatKit.framework"; sourceTree = "<group>"; };
-		C5B3C10F1FC2BF7400AD6026 /* AIPushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIPushKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIPushKit.framework"; sourceTree = "<group>"; };
-		C5B3C1101FC2BF7400AD6026 /* AIPushDepOCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIPushDepOCKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIPushDepOCKit.framework"; sourceTree = "<group>"; };
-		C5B3C1111FC2BFCE00AD6026 /* AIPushKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIPushKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5B3C1141FC2BFCE00AD6026 /* AIPushDepOCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIPushDepOCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5B3C1171FC2BFCE00AD6026 /* AIChatKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIChatKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5B3C1251FC2CF6A00AD6026 /* Sync.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sync.framework; path = Frameworks/Sync.framework; sourceTree = "<group>"; };
 		C5B3C1291FC2E5FE00AD6026 /* ConversationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsViewController.swift; sourceTree = "<group>"; };
 		C5B77E9D1FAEB94400156874 /* AtAllChatDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtAllChatDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +98,14 @@
 		C5B77FDB1FAEF24B00156874 /* AtAllChatDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AtAllChatDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		C5BE4C291FC3D4C6000C3697 /* ChatOnLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOnLineViewController.swift; sourceTree = "<group>"; };
 		C5CC541E1FB0818400F2AC44 /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
+		C5FA146E1FC816A900110700 /* AIPushKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIPushKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5FA14711FC816A900110700 /* AIPushDepOCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIPushDepOCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5FA14741FC816A900110700 /* AINotificationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AINotificationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5FA14771FC816A900110700 /* AIChatKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIChatKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5FA147A1FC81C7000110700 /* AIChatKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIChatKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIChatKit.framework"; sourceTree = "<group>"; };
+		C5FA147B1FC81C7300110700 /* AIPushDepOCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIPushDepOCKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIPushDepOCKit.framework"; sourceTree = "<group>"; };
+		C5FA147C1FC81C7300110700 /* AINotificationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AINotificationKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AINotificationKit.framework"; sourceTree = "<group>"; };
+		C5FA147D1FC81C7300110700 /* AIPushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIPushKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIPushKit.framework"; sourceTree = "<group>"; };
 		D4D1828361635A4D37C7272E /* Pods_AtAllChatDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AtAllChatDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BEE5AA1F0BC00A074C8142 /* Pods-AtAllChatDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AtAllChatDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AtAllChatDemo/Pods-AtAllChatDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,10 +116,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5B3C1261FC2CF6A00AD6026 /* Sync.framework in Frameworks */,
+				C5FA14751FC816A900110700 /* AINotificationKit.framework in Frameworks */,
+				C5FA14721FC816A900110700 /* AIPushDepOCKit.framework in Frameworks */,
+				C5FA14781FC816A900110700 /* AIChatKit.framework in Frameworks */,
+				C5FA146F1FC816A900110700 /* AIPushKit.framework in Frameworks */,
 				1133BE3CCDED29EF8F4B97CF /* Pods_AtAllChatDemo.framework in Frameworks */,
-				C5B3C1181FC2BFCE00AD6026 /* AIChatKit.framework in Frameworks */,
-				C5B3C1121FC2BFCE00AD6026 /* AIPushKit.framework in Frameworks */,
-				C5B3C1151FC2BFCE00AD6026 /* AIPushDepOCKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,10 +146,11 @@
 		C54B32F81FAEFC2100340CE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5FA147C1FC81C7300110700 /* AINotificationKit.framework */,
+				C5FA147B1FC81C7300110700 /* AIPushDepOCKit.framework */,
+				C5FA147D1FC81C7300110700 /* AIPushKit.framework */,
+				C5FA147A1FC81C7000110700 /* AIChatKit.framework */,
 				C5B3C1251FC2CF6A00AD6026 /* Sync.framework */,
-				C5B3C10E1FC2BF7400AD6026 /* AIChatKit.framework */,
-				C5B3C1101FC2BF7400AD6026 /* AIPushDepOCKit.framework */,
-				C5B3C10F1FC2BF7400AD6026 /* AIPushKit.framework */,
 				D4D1828361635A4D37C7272E /* Pods_AtAllChatDemo.framework */,
 			);
 			name = Frameworks;
@@ -191,9 +198,10 @@
 		C5B77E941FAEB94400156874 = {
 			isa = PBXGroup;
 			children = (
-				C5B3C1171FC2BFCE00AD6026 /* AIChatKit.framework */,
-				C5B3C1141FC2BFCE00AD6026 /* AIPushDepOCKit.framework */,
-				C5B3C1111FC2BFCE00AD6026 /* AIPushKit.framework */,
+				C5FA14771FC816A900110700 /* AIChatKit.framework */,
+				C5FA14741FC816A900110700 /* AINotificationKit.framework */,
+				C5FA14711FC816A900110700 /* AIPushDepOCKit.framework */,
+				C5FA146E1FC816A900110700 /* AIPushKit.framework */,
 				C5B77E9F1FAEB94400156874 /* AtAllChatDemo */,
 				C5B77EB41FAEB94400156874 /* AtAllChatDemoTests */,
 				C5B77E9E1FAEB94400156874 /* Products */,

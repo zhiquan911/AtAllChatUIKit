@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupAIChat() {
         
         AIChat.setupWithOption(
-            appKey: "2d68067484a20f1a346b3cf28a898ed7f5736f5bacf0fe60449da95efdb97ad4",
-            secret: "0dd1e322907ad7f55deaa35fec2aac97cae7931454d734364bc63f3e9b9f993a",
+            appKey: "6975cf74e6fde6e9e185e82db571991f0395ba3077e9bc75eb28e3235d1da111",
+            secret: "edeeb3c8c2874cb9ceb907cf1fbfa22eeb9e701144ebf5547032d9b3f9b573d4",
             channel: "demo",
             isProduction: false)
         AIChat.addListener(self)
