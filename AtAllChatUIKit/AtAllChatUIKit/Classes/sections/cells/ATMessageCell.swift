@@ -96,6 +96,17 @@ class ATMessageTextCell: ASCellNode {
         let attrs = [NSAttributedStringKey.font: ATMessageTextCell.font]
         self.labelUserName.attributedText = NSAttributedString(string: self.message.senderName, attributes: attrs)
         
+        /* 支持HTML富文本
+        do{
+            let attrStr = try NSAttributedString(data: self.message.text.data(using: String.Encoding.unicode, allowLossyConversion: true)!, options: [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.html], documentAttributes: nil)
+            
+            self.labelMessageText.attributedText = attrStr
+        }catch let error as NSError {
+            print(error.localizedDescription)
+            self.labelMessageText.attributedText = NSAttributedString(string: self.message.text, attributes: attrs)
+        }
+         */
+        
         //消息内容
         self.labelMessageText.attributedText = NSAttributedString(string: self.message.text, attributes: attrs)
         

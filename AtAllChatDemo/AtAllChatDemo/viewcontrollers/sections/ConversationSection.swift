@@ -22,7 +22,7 @@ class ConversationSection: ListSectionController, ASSectionController {
     }
     
     public func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
-
+        
         let node = ConversationCell(c: self.conversation)
         self.cell = node
         return {
@@ -41,7 +41,7 @@ class ConversationSection: ListSectionController, ASSectionController {
     }
     
     override func didSelectItem(at index: Int) {
-
+        
         let vc = ChatOnLineViewController()
         vc.conversation = self.conversation
         self.viewController?.navigationController?.pushViewController(vc, animated: true)
@@ -96,8 +96,22 @@ class ConversationCell: ASCellNode {
             NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
             NSAttributedStringKey.foregroundColor: UIColor.lightGray
         ]
+        
+        var text = self.conversation.lastChatMessage?.content ?? ""
+        /* 支持HTML富文本
+        var rawText = ""
+        do{
+            let attrStr = try NSAttributedString(data: htmlText.data(using: String.Encoding.unicode, allowLossyConversion: true)!, options: [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.html], documentAttributes: nil)
+            
+            rawText = attrStr.string
+        }catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        */
+        
         node.attributedText = NSAttributedString(
-            string: self.conversation.lastChatMessage?.content ?? "", attributes: attrs)
+            string: text, attributes: attrs)
+        
         return node
     }()
     
@@ -194,7 +208,7 @@ class ConversationCell: ASCellNode {
     /// - Returns:
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         
-     
+        
         let nameStack = ASStackLayoutSpec.horizontal()
         nameStack.alignItems = .center
         nameStack.justifyContent = .spaceBetween
@@ -207,7 +221,7 @@ class ConversationCell: ASCellNode {
         contentStack.justifyContent = .start
         contentStack.spacing = 4
         contentStack.children = [nameStack, self.labelMessageText]
-//        contentStack.style.flexGrow = 1
+        //        contentStack.style.flexGrow = 1
         
         let cornerRadius = self.unreadCountWidth / 2
         

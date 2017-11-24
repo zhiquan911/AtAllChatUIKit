@@ -21,7 +21,7 @@ func GetUsers() -> [AIUserInfo] {
     li.nickname = "Li Lei"
     li.avatarUrl = "https://www.exx.com/src/images/userhead/u013.jpg"
     li.userkey = AICommonCrypto.sha256(li.username + AIPush.getAppKey())
-//    li.userkey = "cba556593157f1dc01a8b2f422219691babcd40c25c1fe3f189321554ebd515d"
+//    li.userkey = "7fbcd19ecfeda32173a9e48abd2bb80a8bd34b6455b0c81faae067c239a88d36"
     
     let han = AIUserInfo()
     han.username = "hanmeimei@atall.io"

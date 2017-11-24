@@ -87,6 +87,10 @@ class ChatOnLineViewController: UIViewController {
         AIChat.removeListener(self)
     }
     
+    deinit {
+        AIChat.removeListener(self)
+    }
+    
     
     /// 读取聊天记录（先本地后网络更新）
     ///
@@ -94,6 +98,7 @@ class ChatOnLineViewController: UIViewController {
     ///   - msgid:
     ///   - limit:
     func loadMessagesFromAIChat(msgid: Int = 0, complete: @escaping (_ result: [ATMessageItem]) -> Void) {
+        
         self.conversation.getMessages(count: self.limit, lastMsgid: msgid) {
             [weak self](flag, newMessages, result) in
             if newMessages.count < self?.limit ?? 20 {
@@ -103,6 +108,18 @@ class ChatOnLineViewController: UIViewController {
                 complete(netMessages)
             }
         }
+        
+        /*
+        AIChat.getMessages(count: self.limit, lastMsgid: msgid, conversationType: .normal, role: "100") {
+            [weak self](flag, newMessages, result) in
+            if newMessages.count < self?.limit ?? 20 {
+                self?.chatView.canLoadmore = false
+            }
+            if let netMessages = self?.convertMessageFillChat(messages: newMessages) {
+                complete(netMessages)
+            }
+        }
+        */
     }
     
     
