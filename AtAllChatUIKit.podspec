@@ -30,10 +30,10 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'AtAllChatUIKit/Classes/**/*'
+  s.source_files = 'AtAllChatUIKit/AtAllChatUIKit/Classes/**/*'
   
   s.resource_bundles = {
-    'AtAllChatUIKit' => ['AtAllChatUIKit/Assets/*.{png,xcassets}']
+    'AtAllChatUIKit' => ['AtAllChatUIKit/AtAllChatUIKit/Assets/*.{png,xcassets}']
   }
 
   s.dependency 'Texture/IGListKit'
