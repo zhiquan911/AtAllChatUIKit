@@ -44,22 +44,22 @@ extension Date {
         var temp: Double = 0;
         var result = ""
         if (timeInterval < 60) {
-            result = NSLocalizedString("now", bundle: Bundle(for: ATImage.self), comment: "")
+            result = NSLocalizedString("now", bundle: Bundle.atchat_bundle, comment: "")
         } else if((timeInterval / 60) < 60){
             temp = timeInterval / 60
-            result = "\(Int(temp)) " + NSLocalizedString("mins ago", bundle: Bundle(for: ATImage.self), comment: "")
+            result = "\(Int(temp)) " + NSLocalizedString("mins ago", bundle: Bundle.atchat_bundle, comment: "")
         } else if((timeInterval / 60 / 60) < 24){
             temp = timeInterval / 60 / 60
-            result = "\(Int(temp)) " + NSLocalizedString("hours ago", bundle: Bundle(for: ATImage.self), comment: "")
+            result = "\(Int(temp)) " + NSLocalizedString("hours ago", bundle: Bundle.atchat_bundle, comment: "")
         } else if((timeInterval / 60 / 60 / 24) < 30){
             temp = timeInterval / 60 / 60 / 24
-            result = "\(Int(temp)) " + NSLocalizedString("days ago", bundle: Bundle(for: ATImage.self), comment: "")
+            result = "\(Int(temp)) " + NSLocalizedString("days ago", bundle: Bundle.atchat_bundle, comment: "")
         } else if((timeInterval / 60 / 60 / 24 / 30) < 12){
             temp = timeInterval / 60 / 60 / 24 / 30
-            result = "\(Int(temp)) " + NSLocalizedString("months ago", bundle: Bundle(for: ATImage.self), comment: "")
+            result = "\(Int(temp)) " + NSLocalizedString("months ago", bundle: Bundle.atchat_bundle, comment: "")
         } else {
             temp = timeInterval / 60 / 60 / 24 / 30 / 12;
-            result = "\(Int(temp)) " + NSLocalizedString("years ago", bundle: Bundle(for: ATImage.self), comment: "")
+            result = "\(Int(temp)) " + NSLocalizedString("years ago", bundle: Bundle.atchat_bundle, comment: "")
         }
         
         return result

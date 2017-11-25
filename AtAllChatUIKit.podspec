@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AtAllChatUIKit'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = 'This a AtAllChatUIKit for Swift 4.0+.'
 
 # This description is used to generate tags and improve search results.
@@ -33,7 +33,10 @@ Pod::Spec.new do |s|
   s.source_files = 'AtAllChatUIKit/AtAllChatUIKit/Classes/**/*'
   
   s.resource_bundles = {
-    'AtAllChatUIKit' => ['AtAllChatUIKit/AtAllChatUIKit/Assets/*.{png,xcassets}']
+    'AtAllChatUIKit' => [
+        'AtAllChatUIKit/AtAllChatUIKit/Assets/*.{png,xcassets}',
+        'AtAllChatUIKit/AtAllChatUIKit/Localizations/*.{lproj,strings}'
+    ]
   }
 
   s.dependency 'Texture/IGListKit'
