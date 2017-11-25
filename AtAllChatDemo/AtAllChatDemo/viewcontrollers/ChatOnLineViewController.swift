@@ -53,6 +53,7 @@ class ChatOnLineViewController: UIViewController {
         self.chatView.username = self.conversation.conversationName
         self.chatView.allowsSendVoice = false
         self.chatView.allowsSendMultiMedia = false
+        self.chatView.allowInputMessage = true
         self.chatView.delegate = self
         self.chatView.shareMenuViewDelegate = self
         self.chatView.viewController = self

@@ -52,6 +52,21 @@ open class ATChatMessageView: UIView {
     /// 是否允许发送多媒体
     public var allowsSendMultiMedia: Bool = false
     
+    /// 是否允许输入消息
+    public var allowInputMessage: Bool = true {
+        didSet {
+            //默认可以发送消息，所以messageInput的约束启用
+            if self.allowInputMessage {
+                self.messageInputBottomConstraints.isActive = true
+                self.tableViewBottomConstraints.isActive = false
+            } else {
+                self.messageInputBottomConstraints.isActive = false
+                self.tableViewBottomConstraints.isActive = true
+            }
+            self.layoutIfNeeded()
+        }
+    }
+    
     /// 组件代理
     @IBOutlet weak public var delegate: ATChatMessageViewDelegate?
     
@@ -68,6 +83,9 @@ open class ATChatMessageView: UIView {
     
     /// 发送消息输入框的底部约束，用于控制弹出键盘的相对位置动画变化
     var messageInputBottomConstraints: NSLayoutConstraint!
+    
+    /// 列表与组件底部的约束，当组件不提供发送消息才启用
+    var tableViewBottomConstraints: NSLayoutConstraint!
     
     /// 是否加载更多消息
     var _shouldLoadMoreMessagesScrollToTop: Bool = true
@@ -201,7 +219,7 @@ public extension ATChatMessageView {
         self.addSubview(self.shareMenuView)
         
         //约束布局
-        self.setupViewConstraints();
+        self.setupViewConstraints2();
         
     }
     
@@ -261,6 +279,44 @@ public extension ATChatMessageView {
         
     }
     
+    /**
+     配置视图组件约束
+     */
+    func setupViewConstraints2() {
+        
+        self.tableView.view.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
+        self.tableView.view.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+        
+        self.tableView.view.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
+        self.tableView.view.bottomAnchor.constraint(equalTo: self.messageInputView.topAnchor, constant: 0).isActive = true
+        
+        self.messageInputView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
+        self.messageInputView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+        
+        self.shareMenuView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
+        self.shareMenuView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+        self.shareMenuView.heightAnchor.constraint(equalToConstant: kShareMenuViewHeight).isActive = true
+        
+        self.messageInputView.bottomAnchor.constraint(equalTo: self.shareMenuView.topAnchor, constant: 0).isActive = true
+        
+        self.messageInputBottomConstraints = self.bottomAnchor.constraint(equalTo: self.messageInputView.bottomAnchor, constant: 0)
+        
+        self.tableViewBottomConstraints = self.tableView.view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0)
+        
+        //默认可以发送消息，所以messageInput的约束启用
+        if self.allowInputMessage {
+            self.messageInputBottomConstraints.isActive = true
+            self.tableViewBottomConstraints.isActive = false
+        } else {
+            self.messageInputBottomConstraints.isActive = false
+            self.tableViewBottomConstraints.isActive = true
+        }
+    }
+    
+    
+    /// 导航栏+状态栏的高度
+    ///
+    /// - Returns:
     func topBarsHeight() -> CGFloat {
         if (self.viewController?.edgesForExtendedLayout.rawValue ?? 0 & UIRectEdge.top.rawValue) == 0 {
             return 0
@@ -531,7 +587,7 @@ public extension ATChatMessageView {
         
         self.adapter.performUpdates(animated: animated) {
             (flag) in
-            NSLog("performUpdates completed")
+//            NSLog("performUpdates completed")
             self.loadingMoreData = false
             if isScrollToBottom {
                 self.tableViewScrollToBottomAnimated(animated)
@@ -596,7 +652,7 @@ public extension ATChatMessageView {
         }
         //刷新显示状态
         section.updateMessageStatus(message)
-        NSLog("updateMessageStatus")
+//        NSLog("updateMessageStatus")
     }
     
     
