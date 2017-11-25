@@ -35,7 +35,7 @@ public class ATProgressHUD: UIView {
             labelTip.layer.cornerRadius = 4
             labelTip.autoresizingMask = [UIViewAutoresizing.flexibleRightMargin, UIViewAutoresizing.flexibleBottomMargin]
             labelTip.backgroundColor = UIColor.clear
-            labelTip.text = NSLocalizedString("手指上滑，取消发送", comment: "")
+            labelTip.text = NSLocalizedString("手指上滑，取消发送", bundle: Bundle(for: ATImage.self), comment: "")
             labelTip.textAlignment = NSTextAlignment.center
             labelTip.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(labelTip)
@@ -211,10 +211,10 @@ public class ATProgressHUD: UIView {
         
         if recording {
             self.labelTip.backgroundColor = UIColor.clear;
-            self.labelTip.text = NSLocalizedString("手指上滑，取消发送", comment: "");
+            self.labelTip.text = NSLocalizedString("手指上滑，取消发送", bundle: Bundle(for: ATImage.self), comment: "");
         } else {
             self.labelTip.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.63);
-            self.labelTip.text = NSLocalizedString("松开手指，取消发送", comment: "");
+            self.labelTip.text = NSLocalizedString("松开手指，取消发送", bundle: Bundle(for: ATImage.self), comment: "");
         }
     }
     
@@ -244,7 +244,7 @@ public class ATProgressHUD: UIView {
         self.imageViewCancel.isHidden = true
         self.imageViewMessageTooShort.isHidden = false
         self.labelTip.backgroundColor = UIColor.clear;
-        self.labelTip.text = NSLocalizedString("说话时间太短", comment: "");
+        self.labelTip.text = NSLocalizedString("说话时间太短", bundle: Bundle(for: ATImage.self), comment: "");
         
         let time: TimeInterval = 1.0
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {

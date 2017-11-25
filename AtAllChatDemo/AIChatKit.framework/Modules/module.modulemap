@@ -1,0 +1,11 @@
+framework module AIChatKit {
+  umbrella header "AIChatKit.h"
+
+  export *
+  module * { export * }
+}
+
+module AIChatKit.Swift {
+    header "AIChatKit-Swift.h"
+    requires objc
+}

@@ -1,0 +1,11 @@
+framework module AINotificationKit {
+  umbrella header "AINotificationKit.h"
+
+  export *
+  module * { export * }
+}
+
+module AINotificationKit.Swift {
+    header "AINotificationKit-Swift.h"
+    requires objc
+}

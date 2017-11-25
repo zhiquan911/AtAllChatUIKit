@@ -150,7 +150,7 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.returnKeyType = UIReturnKeyType.send;
         textView.enablesReturnKeyAutomatically = true; // UITextView内部判断send按钮是否可以用
-        textView.placeHolder = NSLocalizedString("发送新消息", comment: "");
+        textView.placeHolder = NSLocalizedString("Send New Message", bundle: Bundle(for: ATImage.self), comment: "");
         textView.delegate = self;
         
         self.addSubview(textView)
@@ -283,8 +283,8 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
                 UIColor.darkGray,
                 for: .normal)
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-            button.setTitle(NSLocalizedString("按住 说话", comment: ""), for: .normal)
-            button.setTitle(NSLocalizedString("松开 结束", comment: ""), for: .highlighted)
+            button.setTitle(NSLocalizedString("按住 说话", bundle: Bundle(for: ATImage.self), comment: ""), for: .normal)
+            button.setTitle(NSLocalizedString("松开 结束", bundle: Bundle(for: ATImage.self), comment: ""), for: .highlighted)
             button.isHidden = !self.voiceChangeButton.isSelected;
             
             //添加触发事件

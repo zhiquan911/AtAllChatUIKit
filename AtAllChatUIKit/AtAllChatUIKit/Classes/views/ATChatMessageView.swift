@@ -19,7 +19,7 @@ open class ATChatMessageView: UIView {
     let spinToken = "spinner"
     
     /// 消息表格
-//    public var tableView: ATChatTableView!
+    //    public var tableView: ATChatTableView!
     public var tableView: ASCollectionNode!
     
     /// 文本输入框
@@ -179,11 +179,11 @@ public extension ATChatMessageView {
         self.addSubnode(self.tableView)
         
         //配置列表适配器
-//        self.adapter.collectionView = self.tableView
+        //        self.adapter.collectionView = self.tableView
         self.adapter.setASDKCollectionNode(self.tableView)
         self.adapter.dataSource = self
         self.adapter.scrollViewDelegate = self
-
+        
         //文本输入工具栏
         self.messageInputView = ATMessageInputView(frame: CGRect.zero)
         self.messageInputView.allowsSendVoice = self.allowsSendVoice
@@ -392,10 +392,10 @@ public extension ATChatMessageView {
         contentH = ceilf(contentH)
         if contentH <= maxHeight {
             UIView.animate(withDuration: 0.25,
-                                       animations: { () -> Void in
-                                        //改变输入框的高度约束
-                                        self.messageInputView.inputTextHeightConstraints.constant = CGFloat(contentH)
-                                        self.messageInputView.layoutIfNeeded()
+                           animations: { () -> Void in
+                            //改变输入框的高度约束
+                            self.messageInputView.inputTextHeightConstraints.constant = CGFloat(contentH)
+                            self.messageInputView.layoutIfNeeded()
             }) { (Bool) -> Void in
                 self.messageInputView.currentTextHeight = contentH
             }
@@ -403,6 +403,38 @@ public extension ATChatMessageView {
         
     }
     
+    
+    /// 发送文本消息
+    ///
+    /// - Parameter text: 文本内容
+    func sendMessage(text: String) {
+        
+        let message = ATMessageItem()
+        let timestamp = Date().timeIntervalSince1970
+        message.messageId = self.userkey + timestamp.toString()
+        message.senderId = self.userkey
+        message.senderName = self.username
+        message.sended = false;
+        message.messageMediaType = .text
+        message.text = text
+        message.messageSourceType = .send;
+        message.timestamp = Int64(timestamp)
+        
+        
+        
+        //添加消息到表格最底
+        self.add(chatMessages: [message],
+                 toBottomPosition: true,
+                 isScrollToBottom: true,
+                 animated: true) {
+                    () -> Void in
+                    //委托发送消息处理
+                    self.delegate?.chatView?(view: self, didSendMessage: [message])
+        }
+        
+        //完成发送
+        self.finishSendMessage()
+    }
 }
 
 
@@ -442,7 +474,7 @@ public extension ATChatMessageView {
     ///
     /// - Parameter animated: 是否显示动画
     public func tableViewScrollToBottomAnimated(_ animated: Bool) {
-//        self.tableView.loadMoreOnTop = false
+        //        self.tableView.loadMoreOnTop = false
         if !isTableScrollToBottom {
             if self.messages.count == 0 {
                 return
@@ -461,7 +493,7 @@ public extension ATChatMessageView {
             //滚动到底部
             //                self.adapter.scroll(to: item, supplementaryKinds: nil, scrollDirection: .vertical, scrollPosition: scrollDirect, animated: animated)
             
-
+            
         }
     }
     
@@ -476,7 +508,8 @@ public extension ATChatMessageView {
         chatMessages: [ATMessageItem],
         toBottomPosition: Bool = true,
         isScrollToBottom: Bool = true,
-        animated: Bool = false) {
+        animated: Bool = false,
+        updateCompleted: (() -> Void)? = nil) {
         var toBottomPosition = toBottomPosition
         
         var addMessages = chatMessages
@@ -495,13 +528,15 @@ public extension ATChatMessageView {
         } else {
             self.messages = self.messages + addMessages
         }
-
+        
         self.adapter.performUpdates(animated: animated) {
             (flag) in
+            NSLog("performUpdates completed")
             self.loadingMoreData = false
             if isScrollToBottom {
                 self.tableViewScrollToBottomAnimated(animated)
             }
+            updateCompleted?()
         }
         
     }
@@ -556,17 +591,14 @@ public extension ATChatMessageView {
     /// - Parameter message:
     public func reloadMessage(_ message: ATMessageItem) {
         
-        let section = self.adapter.section(for: message)
-        guard section != NSNotFound else {
-            return
-        }
-        guard let cellNode = self.tableView.nodeForItem(at: IndexPath(item: 0, section: section)) as? ATMessageCellProtocal else {
+        guard let section = self.adapter.sectionController(for: message) as? ATMessageCellProtocal else {
             return
         }
         //刷新显示状态
-        cellNode.updateMessageStatus(message)
+        section.updateMessageStatus(message)
+        NSLog("updateMessageStatus")
     }
-
+    
     
     /**
      完成发送消息
@@ -662,28 +694,7 @@ extension ATChatMessageView: UITextViewDelegate{
         if text == "\n" {
             if !textView.text.isEmpty {
                 
-                let message = ATMessageItem()
-                let timestamp = Date().timeIntervalSince1970
-                message.messageId = self.userkey + timestamp.toString()
-                message.senderId = self.userkey
-                message.senderName = self.username
-                message.sended = false;
-                message.messageMediaType = .text
-                message.text = textView.text;
-                message.messageSourceType = .send;
-                message.timestamp = Int64(timestamp)
-                
-                //委托发送消息处理
-                self.delegate?.chatView?(view: self, didSendMessage: [message])
-                
-                //添加消息到表格最底
-                self.add(chatMessages: [message],
-                         toBottomPosition: true,
-                         isScrollToBottom: true,
-                         animated: true)
-                
-                //完成发送
-                self.finishSendMessage()
+                self.sendMessage(text: textView.text)
                 
                 return false
             } else {
@@ -700,17 +711,17 @@ extension ATChatMessageView: UITextViewDelegate{
 extension ATChatMessageView: UIScrollViewDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        NSLog("contentOffset.y = \(self.tableView.contentOffset.y)")
+        //        NSLog("contentOffset.y = \(self.tableView.contentOffset.y)")
         let distance = scrollView.contentSize.height - (scrollView.contentOffset.y + scrollView.bounds.height)
         if distance > 0 && distance <= 44 && scrollView.contentSize.height > 0 {
             if !loadingMoreData && self.canLoadmore {
                 self.loadingMoreData = true
-//                NSLog("distance = \(distance)")
+                //                NSLog("distance = \(distance)")
                 self.adapter.performUpdates(animated: false, completion: nil)
                 
                 let shouldLoad = self.delegate?.shouldLoadMoreMessagesScrollToTop?(view: self) ?? true
                 if shouldLoad {
-//                    NSLog("self.loadingMoreData = \(self.loadingMoreData)")
+                    //                    NSLog("self.loadingMoreData = \(self.loadingMoreData)")
                     self.delegate?.loadMoreMessagesScrollTotop?(view: self)
                 }
             }
@@ -730,7 +741,7 @@ extension ATChatMessageView: UIScrollViewDelegate {
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.isDragging = false
     }
-
+    
 }
 
 // MARK: - Key-value Observing

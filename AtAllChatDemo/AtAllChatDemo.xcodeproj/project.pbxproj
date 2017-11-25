@@ -26,14 +26,15 @@
 		C5B77EB61FAEB94400156874 /* AtAllChatDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B77EB51FAEB94400156874 /* AtAllChatDemoTests.swift */; };
 		C5BE4C2A1FC3D4C6000C3697 /* ChatOnLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BE4C291FC3D4C6000C3697 /* ChatOnLineViewController.swift */; };
 		C5CC541F1FB0818400F2AC44 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC541E1FB0818400F2AC44 /* DemoView.swift */; };
-		C5FA146F1FC816A900110700 /* AIPushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA146E1FC816A900110700 /* AIPushKit.framework */; };
-		C5FA14701FC816A900110700 /* AIPushKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA146E1FC816A900110700 /* AIPushKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5FA14721FC816A900110700 /* AIPushDepOCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14711FC816A900110700 /* AIPushDepOCKit.framework */; };
-		C5FA14731FC816A900110700 /* AIPushDepOCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14711FC816A900110700 /* AIPushDepOCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5FA14751FC816A900110700 /* AINotificationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14741FC816A900110700 /* AINotificationKit.framework */; };
-		C5FA14761FC816A900110700 /* AINotificationKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14741FC816A900110700 /* AINotificationKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5FA14781FC816A900110700 /* AIChatKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14771FC816A900110700 /* AIChatKit.framework */; };
-		C5FA14791FC816A900110700 /* AIChatKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA14771FC816A900110700 /* AIChatKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C5CE49B21FC9406500C782EB /* AIChatKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CE49AF1FC91E9B00C782EB /* AIChatKit.framework */; };
+		C5CE49B31FC9406500C782EB /* AIChatKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5CE49AF1FC91E9B00C782EB /* AIChatKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C5CE49B41FC9406500C782EB /* AINotificationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA147C1FC81C7300110700 /* AINotificationKit.framework */; };
+		C5CE49B51FC9406500C782EB /* AINotificationKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA147C1FC81C7300110700 /* AINotificationKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C5CE49B61FC9406500C782EB /* AIPushDepOCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CE49B11FC91E9C00C782EB /* AIPushDepOCKit.framework */; };
+		C5CE49B71FC9406500C782EB /* AIPushDepOCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5CE49B11FC91E9C00C782EB /* AIPushDepOCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C5CE49B81FC9406500C782EB /* AIPushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA147D1FC81C7300110700 /* AIPushKit.framework */; };
+		C5CE49B91FC9406500C782EB /* AIPushKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C5FA147D1FC81C7300110700 /* AIPushKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C5CE49BB1FC9409900C782EB /* AtAllChatUIKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = C5CE49BA1FC9409900C782EB /* AtAllChatUIKit.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,11 +64,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C5FA14761FC816A900110700 /* AINotificationKit.framework in Embed Frameworks */,
 				C5B3C1281FC2CF7400AD6026 /* Sync.framework in Embed Frameworks */,
-				C5FA14701FC816A900110700 /* AIPushKit.framework in Embed Frameworks */,
-				C5FA14791FC816A900110700 /* AIChatKit.framework in Embed Frameworks */,
-				C5FA14731FC816A900110700 /* AIPushDepOCKit.framework in Embed Frameworks */,
+				C5CE49B71FC9406500C782EB /* AIPushDepOCKit.framework in Embed Frameworks */,
+				C5CE49B51FC9406500C782EB /* AINotificationKit.framework in Embed Frameworks */,
+				C5CE49B91FC9406500C782EB /* AIPushKit.framework in Embed Frameworks */,
+				C5CE49B31FC9406500C782EB /* AIChatKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,12 +99,10 @@
 		C5B77FDB1FAEF24B00156874 /* AtAllChatDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AtAllChatDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		C5BE4C291FC3D4C6000C3697 /* ChatOnLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOnLineViewController.swift; sourceTree = "<group>"; };
 		C5CC541E1FB0818400F2AC44 /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
-		C5FA146E1FC816A900110700 /* AIPushKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIPushKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5FA14711FC816A900110700 /* AIPushDepOCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIPushDepOCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5FA14741FC816A900110700 /* AINotificationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AINotificationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5FA14771FC816A900110700 /* AIChatKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AIChatKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5FA147A1FC81C7000110700 /* AIChatKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIChatKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIChatKit.framework"; sourceTree = "<group>"; };
-		C5FA147B1FC81C7300110700 /* AIPushDepOCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIPushDepOCKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIPushDepOCKit.framework"; sourceTree = "<group>"; };
+		C5CE49AE1FC91E9B00C782EB /* AINotificationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AINotificationKit.framework; sourceTree = "<group>"; };
+		C5CE49AF1FC91E9B00C782EB /* AIChatKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AIChatKit.framework; sourceTree = "<group>"; };
+		C5CE49B11FC91E9C00C782EB /* AIPushDepOCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AIPushDepOCKit.framework; sourceTree = "<group>"; };
+		C5CE49BA1FC9409900C782EB /* AtAllChatUIKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AtAllChatUIKit.podspec; path = ../AtAllChatUIKit.podspec; sourceTree = "<group>"; };
 		C5FA147C1FC81C7300110700 /* AINotificationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AINotificationKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AINotificationKit.framework"; sourceTree = "<group>"; };
 		C5FA147D1FC81C7300110700 /* AIPushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AIPushKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/AtAllChatDemo-bhsulhrtxcmygodkvaqeefdfbxlf/Build/Products/Debug-iphoneos/AIPushKit.framework"; sourceTree = "<group>"; };
 		D4D1828361635A4D37C7272E /* Pods_AtAllChatDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AtAllChatDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,12 +114,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5CE49B41FC9406500C782EB /* AINotificationKit.framework in Frameworks */,
+				C5CE49B81FC9406500C782EB /* AIPushKit.framework in Frameworks */,
+				C5CE49B21FC9406500C782EB /* AIChatKit.framework in Frameworks */,
 				C5B3C1261FC2CF6A00AD6026 /* Sync.framework in Frameworks */,
-				C5FA14751FC816A900110700 /* AINotificationKit.framework in Frameworks */,
-				C5FA14721FC816A900110700 /* AIPushDepOCKit.framework in Frameworks */,
-				C5FA14781FC816A900110700 /* AIChatKit.framework in Frameworks */,
-				C5FA146F1FC816A900110700 /* AIPushKit.framework in Frameworks */,
 				1133BE3CCDED29EF8F4B97CF /* Pods_AtAllChatDemo.framework in Frameworks */,
+				C5CE49B61FC9406500C782EB /* AIPushDepOCKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,10 +145,11 @@
 		C54B32F81FAEFC2100340CE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5CE49AF1FC91E9B00C782EB /* AIChatKit.framework */,
 				C5FA147C1FC81C7300110700 /* AINotificationKit.framework */,
-				C5FA147B1FC81C7300110700 /* AIPushDepOCKit.framework */,
+				C5CE49B11FC91E9C00C782EB /* AIPushDepOCKit.framework */,
 				C5FA147D1FC81C7300110700 /* AIPushKit.framework */,
-				C5FA147A1FC81C7000110700 /* AIChatKit.framework */,
+				C5CE49AE1FC91E9B00C782EB /* AINotificationKit.framework */,
 				C5B3C1251FC2CF6A00AD6026 /* Sync.framework */,
 				D4D1828361635A4D37C7272E /* Pods_AtAllChatDemo.framework */,
 			);
@@ -198,10 +198,7 @@
 		C5B77E941FAEB94400156874 = {
 			isa = PBXGroup;
 			children = (
-				C5FA14771FC816A900110700 /* AIChatKit.framework */,
-				C5FA14741FC816A900110700 /* AINotificationKit.framework */,
-				C5FA14711FC816A900110700 /* AIPushDepOCKit.framework */,
-				C5FA146E1FC816A900110700 /* AIPushKit.framework */,
+				C5CE49BA1FC9409900C782EB /* AtAllChatUIKit.podspec */,
 				C5B77E9F1FAEB94400156874 /* AtAllChatDemo */,
 				C5B77EB41FAEB94400156874 /* AtAllChatDemoTests */,
 				C5B77E9E1FAEB94400156874 /* Products */,
@@ -345,6 +342,7 @@
 				C54CCC3D1FB1AA6B0095E253 /* messages.json in Resources */,
 				C5B77EA81FAEB94400156874 /* Assets.xcassets in Resources */,
 				C5B77EA61FAEB94400156874 /* Main.storyboard in Resources */,
+				C5CE49BB1FC9409900C782EB /* AtAllChatUIKit.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +595,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = AtAllChatDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -619,6 +618,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = AtAllChatDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

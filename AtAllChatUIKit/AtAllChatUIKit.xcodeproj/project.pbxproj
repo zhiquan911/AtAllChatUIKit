@@ -12,7 +12,6 @@
 		C54B332C1FAF0A9200340CE1 /* ATMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54B330F1FAF0A9200340CE1 /* ATMessageItem.swift */; };
 		C54CCC1F1FB17ECA0095E253 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC1E1FB17ECA0095E253 /* Date+extension.swift */; };
 		C54CCC381FB19FAE0095E253 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC371FB19FAE0095E253 /* UIImage+extension.swift */; };
-		C54CCC3A1FB1A60A0095E253 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = C54CCC391FB1A6090095E253 /* Cartfile */; };
 		C54CCC481FB1B1150095E253 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC3E1FB1B1130095E253 /* UIView+extension.swift */; };
 		C54CCC491FB1B1150095E253 /* NSTimer+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC3F1FB1B1140095E253 /* NSTimer+extension.swift */; };
 		C54CCC4A1FB1B1150095E253 /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CCC401FB1B1140095E253 /* UIColor+extension.swift */; };
@@ -61,7 +60,6 @@
 		C54B330F1FAF0A9200340CE1 /* ATMessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATMessageItem.swift; sourceTree = "<group>"; };
 		C54CCC1E1FB17ECA0095E253 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		C54CCC371FB19FAE0095E253 /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
-		C54CCC391FB1A6090095E253 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		C54CCC3E1FB1B1130095E253 /* UIView+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		C54CCC3F1FB1B1140095E253 /* NSTimer+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTimer+extension.swift"; sourceTree = "<group>"; };
 		C54CCC401FB1B1140095E253 /* UIColor+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
@@ -290,7 +288,6 @@
 		C58ED7761FAC320800982F18 = {
 			isa = PBXGroup;
 			children = (
-				C54CCC391FB1A6090095E253 /* Cartfile */,
 				C58ED7821FAC320800982F18 /* AtAllChatUIKit */,
 				C58ED78D1FAC320800982F18 /* AtAllChatUIKitTests */,
 				C58ED7811FAC320800982F18 /* Products */,
@@ -478,7 +475,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54CCC3A1FB1A60A0095E253 /* Cartfile in Resources */,
 				C5CC541C1FB056D100F2AC44 /* ATChatMessageViewTextCell.xib in Resources */,
 				C54B33261FAF0A9200340CE1 /* SCImages.xcassets in Resources */,
 			);

@@ -13,11 +13,26 @@ import AsyncDisplayKit
 /// 文本消息分区
 open class ATMessageTextSection: ListSectionController, ASSectionController {
     
+    /// 默认3分钟内的消息不显示时间
     let timeShowInterval: TimeInterval = 60 * 3
     
-    private var message: ATMessageItem!
-    private var preMessage: ATMessageItem?
-    private var inverted: Bool = false
+    var message: ATMessageItem!
+    var preMessage: ATMessageItem?
+    var inverted: Bool = false
+    
+    
+    /// 显示内容的单元格
+    lazy var contentCell: ATMessageTextCell = {
+        let node = ATMessageTextCell(model: self.message)
+        return node
+    }()
+    
+    
+    /// 显示时间的单元格
+    lazy var timeCell: ATMessageTimeCell = {
+        let node = ATMessageTimeCell(time: self.message.timestamp)
+        return node
+    }()
     
     init(preMessage: ATMessageItem?, inverted: Bool) {
         super.init()
@@ -37,18 +52,18 @@ open class ATMessageTextSection: ListSectionController, ASSectionController {
         // 表格如果翻转则先显示消息再显示时间
         if self.inverted {
             if index == 0 {
-                node = ATMessageTextCell(model: self.message)
+                node = self.contentCell
             } else {
-                node = ATMessageTimeCell(time: self.message.timestamp)
+                node = self.timeCell
             }
             
         } else {
             // 没有翻转，而且行数为2，先显示时间，再显示消息
             if index == 0 && count == 2 {
-                node = ATMessageTimeCell(time: self.message.timestamp)
+                node = self.timeCell
                 
             } else {
-                node = ATMessageTextCell(model: self.message)
+                node = self.contentCell
             }
         }
         
@@ -135,5 +150,15 @@ open class ATMessageTextSection: ListSectionController, ASSectionController {
     
 }
 
-
+extension ATMessageTextSection: ATMessageCellProtocal {
+    
+    /// 更新消息
+    ///
+    /// - Parameter message:
+    func updateMessageStatus(_ message: ATMessageItem) {
+        self.message = message
+        self.contentCell.didEnterVisibleState()
+        self.timeCell.didEnterVisibleState()
+    }
+}
 

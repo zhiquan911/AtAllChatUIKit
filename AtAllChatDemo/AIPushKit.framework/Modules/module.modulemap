@@ -1,0 +1,11 @@
+framework module AIPushKit {
+  umbrella header "AIPushKit.h"
+
+  export *
+  module * { export * }
+}
+
+module AIPushKit.Swift {
+    header "AIPushKit-Swift.h"
+    requires objc
+}

@@ -241,18 +241,6 @@ class ATMessageTextCell: ASCellNode {
     
 }
 
-extension ATMessageTextCell: ATMessageCellProtocal {
-    
-    
-    /// 更新消息
-    ///
-    /// - Parameter message:
-    func updateMessageStatus(_ message: ATMessageItem) {
-        self.message = message
-        self.didEnterVisibleState()
-    }
-}
-
 
 /// 时间单元格
 class ATMessageTimeCell: ASCellNode {
@@ -280,7 +268,7 @@ class ATMessageTimeCell: ASCellNode {
             NSAttributedStringKey.foregroundColor: UIColor.white,
         ]
         self.labelTime.attributedText = NSAttributedString(string: Date.getShortTimeByStamp(timestamp), attributes: attrs)
-        self.style.height = ASDimensionMake(30)
+        self.style.minHeight = ASDimensionMake(30)
     }
     
     override func didLoad() {
@@ -293,7 +281,8 @@ class ATMessageTimeCell: ASCellNode {
         backgroundNode.backgroundColor = UIColor(white: 0.8, alpha: 1)
         backgroundNode.cornerRadius = 4
         let backgroundSpec = ASBackgroundLayoutSpec(child: insetSpec, background: backgroundNode)
-        return ASRelativeLayoutSpec(horizontalPosition: .center, verticalPosition: .end, sizingOption: .minimumHeight, child: backgroundSpec)
+        let containerInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 16, left: 0, bottom: 8, right: 0), child: backgroundSpec)
+        return ASRelativeLayoutSpec(horizontalPosition: .center, verticalPosition: .end, sizingOption: .minimumHeight, child: containerInset)
     }
     
     

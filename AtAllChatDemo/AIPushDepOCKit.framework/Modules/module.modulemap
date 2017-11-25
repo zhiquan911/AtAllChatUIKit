@@ -1,0 +1,6 @@
+framework module AIPushDepOCKit {
+  umbrella header "AIPushDepOCKit.h"
+
+  export *
+  module * { export * }
+}
