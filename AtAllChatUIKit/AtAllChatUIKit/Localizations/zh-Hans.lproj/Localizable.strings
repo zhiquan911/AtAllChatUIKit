@@ -9,6 +9,7 @@
 "now" = "刚刚";
 "mins ago" = "分钟前";
 "hours ago" = "小时前";
+"days ago" = "天前";
 "months ago" = "个月前";
 "years ago" = "年前";
 "Send New Message" = "发送新消息";
