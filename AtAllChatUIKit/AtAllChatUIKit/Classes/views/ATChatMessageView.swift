@@ -40,6 +40,18 @@ open class ATChatMessageView: UIView {
     /// 消息发送者昵称
     public var username: String = ""
     
+    /// 用户图像静态
+    public var userAvatar: UIImage?
+    
+    /// 用户头像链接
+    public var userAvatarURL: String = ""
+    
+    /// 是否显示接收方名字
+    public var showReceiverName: Bool = false
+    
+    /// 是否显示我方名字
+    public var showUserName: Bool = false
+    
     /// 当用户滚动视图时是否不滚动到底部
     public var shouldPreventScrollToBottomWhileUserScrolling: Bool = false
     
@@ -66,6 +78,8 @@ open class ATChatMessageView: UIView {
             self.layoutIfNeeded()
         }
     }
+    
+//    public var safeAreaInsets: UIEdgeInsets = .zero
     
     /// 组件代理
     @IBOutlet weak public var delegate: ATChatMessageViewDelegate?
@@ -219,14 +233,14 @@ public extension ATChatMessageView {
         self.addSubview(self.shareMenuView)
         
         //约束布局
-        self.setupViewConstraints2();
+        self.setupViewConstraints();
         
     }
     
     /**
      配置视图组件约束
      */
-    func setupViewConstraints() {
+    func setupViewConstraints_deprecated() {
         
         let views: [String: Any] = [
             "tableView": self.tableView.view,
@@ -282,7 +296,7 @@ public extension ATChatMessageView {
     /**
      配置视图组件约束
      */
-    func setupViewConstraints2() {
+    func setupViewConstraints() {
         
         self.tableView.view.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         self.tableView.view.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
@@ -379,6 +393,14 @@ public extension ATChatMessageView {
         }
         let keyBoardHeight = (keyBoardInfo as AnyObject).cgRectValue.size.height //键盘最终的高度
         
+        var bottomInset: CGFloat = 0
+        if #available(iOS 11.0, *) {
+            if self.superview != nil {
+                bottomInset = self.superview!.safeAreaInsets.bottom
+            }
+        }
+        
+        
         UIView.animate(withDuration: 0.25,
                        animations: {
                         [unowned self]() -> Void in
@@ -387,7 +409,7 @@ public extension ATChatMessageView {
                         if (notification.name == NSNotification.Name.UIKeyboardWillShow) {
                             self.isShareMenuViewShow = false    //键盘弹出后，多媒体隐藏
                             if keyBoardHeight > 0 {
-                                self.messageInputBottomConstraints.constant = keyBoardHeight
+                                self.messageInputBottomConstraints.constant = keyBoardHeight - bottomInset
                             }
                         } else {
                             
@@ -470,13 +492,13 @@ public extension ATChatMessageView {
         message.messageId = self.userkey + timestamp.toString()
         message.senderId = self.userkey
         message.senderName = self.username
+        message.avatarUrl = self.userAvatarURL
+        message.avatar = self.userAvatar
         message.sended = false;
         message.messageMediaType = .text
         message.text = text
         message.messageSourceType = .send;
         message.timestamp = Int64(timestamp)
-        
-        
         
         //添加消息到表格最底
         self.add(chatMessages: [message],
@@ -703,8 +725,10 @@ extension ATChatMessageView: ListAdapterDataSource {
             } else {
                 preMessage = self.messages.Object(before: obj)
             }
-            
-            return ATMessageTextSection(preMessage: preMessage, inverted: self.tableView.inverted)
+            let section = ATMessageTextSection(preMessage: preMessage, inverted: self.tableView.inverted)
+            section.showUserName = self.showUserName
+            section.showReceiverName = self.showReceiverName
+            return section
         }
     }
     

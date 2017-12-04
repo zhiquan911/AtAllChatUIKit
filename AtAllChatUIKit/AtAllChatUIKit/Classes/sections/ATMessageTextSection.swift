@@ -16,14 +16,27 @@ open class ATMessageTextSection: ListSectionController, ASSectionController {
     /// 默认3分钟内的消息不显示时间
     let timeShowInterval: TimeInterval = 60 * 3
     
+    
+    /// 当前的消息
     var message: ATMessageItem!
+    
+    /// 前一条消息
     var preMessage: ATMessageItem?
+    
+    /// 是否翻转数据
     var inverted: Bool = false
     
+    /// 是否显示接收方名字
+    var showReceiverName: Bool = false
+    
+    /// 是否显示我方名字
+    var showUserName: Bool = false
     
     /// 显示内容的单元格
     lazy var contentCell: ATMessageTextCell = {
         let node = ATMessageTextCell(model: self.message)
+        node.showReceiverName = self.showReceiverName
+        node.showUserName = self.showUserName
         return node
     }()
     

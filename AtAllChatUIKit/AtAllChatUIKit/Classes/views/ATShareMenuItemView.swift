@@ -98,3 +98,49 @@ open class ATShareMenuItemView: UIView {
     }
 
 }
+
+
+// MARK: - 工厂
+extension ATShareMenuItemView {
+    
+    
+    /// 图片
+    public static var photo: ATShareMenuItemView {
+        let shareMenuItem = ATShareMenuItemView(
+            image: UIImage.loadImage(named: "sharemore_pic")!,
+            title: NSLocalizedString("Photo", bundle: Bundle.atchat_bundle, comment: ""))
+        return shareMenuItem
+    }
+    
+    /// 拍照
+    public static var photograph: ATShareMenuItemView {
+        let shareMenuItem = ATShareMenuItemView(
+            image: UIImage.loadImage(named: "sharemore_video")!,
+            title: NSLocalizedString("Photograph", bundle: Bundle.atchat_bundle, comment: ""))
+        return shareMenuItem
+    }
+    
+    /// 视频
+    public static var video: ATShareMenuItemView {
+        let shareMenuItem = ATShareMenuItemView(
+            image: UIImage.loadImage(named: "sharemore_videovoip")!,
+            title: NSLocalizedString("Video", bundle: Bundle.atchat_bundle, comment: ""))
+        return shareMenuItem
+    }
+    
+    /// 位置
+    public static var location: ATShareMenuItemView {
+        let shareMenuItem = ATShareMenuItemView(
+            image: UIImage.loadImage(named: "sharemore_location")!,
+            title: NSLocalizedString("Location", bundle: Bundle.atchat_bundle, comment: ""))
+        return shareMenuItem
+    }
+    
+    /// 名片
+    public static var card: ATShareMenuItemView {
+        let shareMenuItem = ATShareMenuItemView(
+            image: UIImage.loadImage(named: "sharemore_friendcard")!,
+            title: NSLocalizedString("Card", bundle: Bundle.atchat_bundle, comment: ""))
+        return shareMenuItem
+    }
+}

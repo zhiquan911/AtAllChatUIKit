@@ -46,12 +46,12 @@ public class ATMessageInputView: UIImageView, UITextViewDelegate {
     /**
      *  是否允许发送语音
      */
-    public var allowsSendVoice: Bool = false // default is YES
+    public var allowsSendVoice: Bool = true // default is YES
     
     /**
      *  是否允许发送多媒体
      */
-    public var allowsSendMultiMedia: Bool = false // default is YES
+    public var allowsSendMultiMedia: Bool = true // default is YES
     
     /**
      *  是否支持发送表情

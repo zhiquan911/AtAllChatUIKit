@@ -8,6 +8,7 @@
 
 import UIKit
 import AIChatKit
+import AIPushKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,8 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appKey: "6975cf74e6fde6e9e185e82db571991f0395ba3077e9bc75eb28e3235d1da111",
             secret: "edeeb3c8c2874cb9ceb907cf1fbfa22eeb9e701144ebf5547032d9b3f9b573d4",
             channel: "demo",
-            isProduction: false)
+            env: .test)
         AIChat.addListener(self)
+        
     }
     
 

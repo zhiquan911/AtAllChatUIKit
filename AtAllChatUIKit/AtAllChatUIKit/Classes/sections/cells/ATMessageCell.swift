@@ -9,7 +9,7 @@ import Foundation
 import AsyncDisplayKit
 
 class ATMessageTextCell: ASCellNode {
-
+    
     /// 内容文字大小
     static let font: UIFont = UIFont.systemFont(ofSize: 14)
     
@@ -17,7 +17,13 @@ class ATMessageTextCell: ASCellNode {
     var avatarMinHeight: CGFloat = 40
     
     /// 消息实例
-    private var message: ATMessageItem!
+    var message: ATMessageItem!
+    
+    /// 是否显示接收方名字
+    var showReceiverName: Bool = false
+    
+    /// 是否显示我方名字
+    var showUserName: Bool = false
     
     /// 用户名
     lazy var labelUserName: ASTextNode = {
@@ -72,7 +78,9 @@ class ATMessageTextCell: ASCellNode {
     /// 初始化单元格
     /// 后台线程在这里执行初始化
     /// - Parameter model: 消息实体
-    init(model: ATMessageItem) {
+    init(model: ATMessageItem,
+         showReceiverName: Bool = false,
+         showUserName: Bool = false) {
         super.init()
         // Automatic Subnode Management
         self.automaticallyManagesSubnodes = true
@@ -82,6 +90,8 @@ class ATMessageTextCell: ASCellNode {
         self.buttonError.style.preferredSize = CGSize(width: 20, height: 20)
         
         self.message = model
+        self.showReceiverName = showReceiverName
+        self.showUserName = showUserName
         
         switch self.message.messageSourceType {
         //对方作为接收
@@ -97,14 +107,14 @@ class ATMessageTextCell: ASCellNode {
         self.labelUserName.attributedText = NSAttributedString(string: self.message.senderName, attributes: attrs)
         
         /* 支持HTML富文本
-        do{
-            let attrStr = try NSAttributedString(data: self.message.text.data(using: String.Encoding.unicode, allowLossyConversion: true)!, options: [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.html], documentAttributes: nil)
-            
-            self.labelMessageText.attributedText = attrStr
-        }catch let error as NSError {
-            print(error.localizedDescription)
-            self.labelMessageText.attributedText = NSAttributedString(string: self.message.text, attributes: attrs)
-        }
+         do{
+         let attrStr = try NSAttributedString(data: self.message.text.data(using: String.Encoding.unicode, allowLossyConversion: true)!, options: [NSAttributedString.DocumentReadingOptionKey.documentType : NSAttributedString.DocumentType.html], documentAttributes: nil)
+         
+         self.labelMessageText.attributedText = attrStr
+         }catch let error as NSError {
+         print(error.localizedDescription)
+         self.labelMessageText.attributedText = NSAttributedString(string: self.message.text, attributes: attrs)
+         }
          */
         
         //消息内容
@@ -121,7 +131,7 @@ class ATMessageTextCell: ASCellNode {
     override func didLoad() {
         
     }
- 
+    
     
     /// 布局设置
     ///
@@ -139,7 +149,7 @@ class ATMessageTextCell: ASCellNode {
         
         let nameStack = ASStackLayoutSpec.vertical()
         nameStack.alignItems = .stretch
-        nameStack.justifyContent = .start
+        nameStack.justifyContent = .center
         nameStack.spacing = 0
         nameStack.style.flexShrink = 1
         nameStack.style.flexGrow = 1
@@ -151,7 +161,7 @@ class ATMessageTextCell: ASCellNode {
         contentStack.style.flexGrow = 1
         contentStack.style.alignSelf = .stretch
         contentStack.style.minHeight = ASDimensionMake(self.avatarMinHeight)
-    
+        
         let statusLayout = ASWrapperLayoutSpec(layoutElements: [
             self.buttonError,
             self.progress
@@ -160,7 +170,7 @@ class ATMessageTextCell: ASCellNode {
         statusLayout.style.flexGrow = 1
         statusLayout.style.minWidth = ASDimensionMake(36)
         
-
+        
         let contentLayout = ASBackgroundLayoutSpec()
         var avatarRel: ASRelativeLayoutSpec
         
@@ -173,8 +183,11 @@ class ATMessageTextCell: ASCellNode {
             nameStack.alignItems = .start
             
             usernameInsets = UIEdgeInsetsMake(0, 8, 0, 0)
-            contentInsets = UIEdgeInsets(top: 12, left: 18, bottom: 12, right: 12)
+            if self.showReceiverName {
+                nameStack.children?.append(ASInsetLayoutSpec(insets: usernameInsets, child: self.labelUserName))
+            }
             
+            contentInsets = UIEdgeInsets(top: 12, left: 18, bottom: 12, right: 12)
             contentStack.children = [contentLayout, statusLayout]
             
             //头像在左边
@@ -193,6 +206,9 @@ class ATMessageTextCell: ASCellNode {
             nameStack.alignItems = .end
             
             usernameInsets = UIEdgeInsetsMake(0, 0, 0, 8)
+            if self.showUserName {
+                nameStack.children?.append(ASInsetLayoutSpec(insets: usernameInsets, child: self.labelUserName))
+            }
             
             contentInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 18)
             contentStack.children = [statusLayout, contentLayout]
@@ -213,16 +229,13 @@ class ATMessageTextCell: ASCellNode {
         contentLayout.background = self.viewBubble
         contentLayout.style.flexShrink = 1
         
-        if !(self.labelUserName.attributedText?.string.isEmpty ?? true) {
-            nameStack.children?.append(ASInsetLayoutSpec(insets: usernameInsets, child: self.labelUserName))
-        }
         nameStack.children?.append(contentStack)
         
         return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8),
                                  child: avatarRel)
- 
+        
     }
-
+    
     
     /// 进入显示访问时执行
     override func didEnterVisibleState() {
@@ -266,7 +279,7 @@ class ATMessageTimeCell: ASCellNode {
         let attrs = [
             NSAttributedStringKey.font: ATMessageTextCell.font,
             NSAttributedStringKey.foregroundColor: UIColor.white,
-        ]
+            ]
         self.labelTime.attributedText = NSAttributedString(string: Date.getShortTimeByStamp(timestamp), attributes: attrs)
         self.style.minHeight = ASDimensionMake(30)
     }
